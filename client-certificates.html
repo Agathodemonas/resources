@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title> Client Certificate CA Setup and Signing</title>
+        <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<style>
+    .highlight table td.code {
+    width: 100%;
+    }
+    td, th {
+    padding: 0px;
+}
+table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+body figure.code .highlight pre {
+    white-space: pre;
+}
+figure.code, .gist {
+    background: rgba(0, 0, 0, 0) none repeat scroll 0% 0%;
+    padding: 0px;
+    margin-bottom: 1.5em;
+}
+.pre-code, html .gist .gist-file .gist-syntax .highlight pre, .highlight code {
+    white-space: pre;
+    font-family: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace !important;
+    overflow: auto hidden;
+    display: block;
+    padding: 0.8em;
+    line-height: 1.45em;
+    background: rgb(252, 252, 252) url("/images/noise.png?1412695263") repeat scroll left top !important;
+    color: rgb(88, 110, 117) !important;
+}
+</style>
+	</head>
+	<body>
+        <div id="main" class="container">
+            <div id="content">
+              <div class="row">
+      <div class="page-content col-md-9">        
+		<article		>
+			<header class="page-header">
+				<h1 class="entry-title" itemprop="name headline">
+					Client Certificate CA Setup and Signing
+				</h1>
+			</header>
+
+			<div class="entry-content clearfix" itemprop="articleBody description">
+				<p>
+					Previously,
+					<a href="/2015/07/28/ssl-client-certificates-work/"
+						>I wrote about the promise of using Client SSL Certificates for
+						authentication</a
+					>. With this post, we start down the road of actually putting this in
+					practice.
+				</p>
+
+				<p>
+					The first step is to set up a Certificate Authority (CA).<!-- more -->
+					That sounds fancy, but it’s really just a key pair where the private
+					key is used to sign a client’s public key in the form of certificate
+					that’s later used for verification between the browser and the server.
+				</p>
+
+				<p>The process of generating a CA is simple:</p>
+
+				<figure class="code">
+					<div class="highlight">
+						<table>
+							<tbody>
+								<tr>
+									<td class="gutter">
+										<pre class="line-numbers"><span class="line-number">1</span>
+<span class="line-number">2</span>
+</pre>
+									</td>
+									<td class="code">
+										<pre><code class=""><span class="line">openssl genrsa -out CA.key 2048
+</span><span class="line">openssl req -x509 -new -nodes -key CA.key -days 7300 -out CA.pem</span></code></pre>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</figure>
+
+				<p>
+					Be sure to keep <em>CA.key</em> secure. You will need it on the server
+					if you want to auto create the client certificates, but in effect it’s
+					the root password for you app, so treat it as such!
+				</p>
+
+				<p>
+					The CA is used for signing the client’s public key. In simple terms
+					the process is composed of two parts:
+				</p>
+
+				<p>
+					A <em>signing algorithm</em> is used to create a signature, really
+					just a blob of data created from the data to be signed (in this case
+					the client’s public key) and the signer’s private key (in this case
+					the CA key).
+				</p>
+
+				<p>
+					Given the original data, the signers public key, and the signature a
+					<em>signature verifying algorithm</em> can verify that the signer’s
+					private key created that signature.
+				</p>
+
+				<p>
+					The math is complex, but the Wikipedia in-depth write-up on how
+					<a href="https://en.wikipedia.org/wiki/Digital_signature"
+						>Digital signatures</a
+					>
+					work.
+				</p>
+
+				<p>
+					For the purposes of a web application that generates client
+					certificates, we can <strong>stop right here</strong>. However, do get
+					a sense of the flow, let’s walk through the rest of the process.
+				</p>
+
+				<p>Creating a client certificate is a three step process.</p>
+
+				<ol>
+					<li>Generate a public key pair for the client.</li>
+					<li>
+						Generate a Certificate Signing Request (CSR) from the public key.
+					</li>
+					<li>Sign the CSR with the CA key creating the client certificate.</li>
+				</ol>
+
+				<p>
+					Later we’ll do this in Ruby, but process using the
+					<em>openssl</em> command line tool looks like this:
+				</p>
+
+				<p>Create a key-pair:</p>
+
+				<figure class="code">
+					<div class="highlight">
+						<table>
+							<tbody>
+								<tr>
+									<td class="gutter">
+										<pre class="line-numbers"><span class="line-number">1</span>
+</pre>
+									</td>
+									<td class="code">
+										<pre><code class=""><span class="line">openssl genrsa -out alice.key 2028</span></code></pre>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</figure>
+
+				<p>Use that key to create the CSR:</p>
+
+				<figure class="code">
+					<div class="highlight">
+						<table>
+							<tbody>
+								<tr>
+									<td class="gutter">
+										<pre class="line-numbers"><span class="line-number">1</span>
+</pre>
+									</td>
+									<td class="code">
+										<pre><code class=""><span class="line">openssl req -new -key alice.key -out alice.csr</span></code></pre>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</figure>
+
+				<p>
+					You’ll be prompted for a bunch information, the defaults are fine
+					we’re not going to be using this for anything.
+				</p>
+
+				<p>
+					Finally, use the CA to sign the CSR, generating the client
+					certificate:
+				</p>
+
+				<figure class="code">
+					<div class="highlight">
+						<table>
+							<tbody>
+								<tr>
+									<td class="gutter">
+										<pre class="line-numbers"><span class="line-number">1</span>
+</pre>
+									</td>
+									<td class="code">
+										<pre><code class=""><span class="line">openssl ca -cert CA.pem -keyfile CA.key -in alice.csr -out alice.crt</span></code></pre>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</figure>
+
+				<p>
+					However, if you actually run that, it will fail. Before you can use
+					the <code>ca</code> command, you need a bunch of configuration. It
+					needs a database to keep track of issued and revoked certificates, and
+					a handful of other details. That additional configuration and
+					infrastructure that’s beyond the scope of this post and completely
+					unnecessary for how we’re going to use client certificates.
+				</p>
+
+				<p>
+					However, for now you can get close to what we’re going to do with:
+				</p>
+
+				<figure class="code">
+					<div class="highlight">
+						<table>
+							<tbody>
+								<tr>
+									<td class="gutter">
+										<pre class="line-numbers"><span class="line-number">1</span>
+</pre>
+									</td>
+									<td class="code">
+										<pre><code class=""><span class="line">openssl x509 -sha256 -req -in alice.csr -out alice.crt -CA CA.pem -CAkey CA.key -CAcreateserial -days 1095</span></code></pre>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</figure>
+
+				<p>
+					Now that we have the CA files, we’ll use them in the next post
+					configure Apache.
+				</p>
+
+				<ol>
+					<li>
+						<a href="/2015/07/28/ssl-client-certificates-work/">Introduction</a>
+					</li>
+					<li>Ca Setup and Signing (you’re reading it)</li>
+					<li>Apache Configuration</li>
+					<li>Client Certificate Generation in Ruby</li>
+					<li>Best practices</li>
+				</ol>
+			</div>
+		</article>
+
+		<footer>
+			<p class="meta text-muted">Original source: https://stuff-things.net/2015/09/17/client-certificate-ca-setup-and-signing/</p>
+		</footer>
+   </div>
+   </div>
+   </div>     
+        <!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+	</body>
+</html>

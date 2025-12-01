@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Processes on Linux</title>
+  <style>
+  .faq {
+  font-family: Helvetica;
+  width: 75%;
+  margin: 0 0 0 12%;
+}
+
+.faq-q {
+  border-top: 2px dashed;
+  border-color: #017b9f !important;
+  margin:0; padding: 30px;
+  counter-increment: section;
+  position: relative;
+}
+
+.faq-q span{
+  font-size:18px;
+}
+
+.faq-q:nth-child(even):before {
+  content: counter(section);
+  right: 100%;
+  margin-right: -20px;
+  position: absolute;
+  border-radius: 50%;
+  padding: 10px;
+  height: 20px;
+  width: 20px;
+  background-color: #017b9f;
+  text-align:center;
+  color: white;
+  font-size: 110%;
+}
+
+.faq-q:nth-child(odd):before {
+  content: counter(section);
+  left: 100%;
+  margin-left: -20px;
+  position: absolute;
+  border-radius: 50%;
+  padding: 10px;
+  height: 20px;
+  width: 20px;
+  background-color: #017b9f;
+  text-align:center;
+  color: white;
+  font-size: 110%;
+}
+
+.faq-q:nth-child(even) {
+  border-left: 2px dashed;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin-right: 30px;
+  padding-right: 0;
+}
+
+.faq-q:nth-child(odd) {
+  border-right: 2px dashed;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  margin-left: 30px;
+  padding-left: 0;
+}
+.faq-q:first-child {
+  border-top: 0;
+  border-top-right-radius:0;
+  border-top-left-radius:0;
+}
+
+.faq-q:last-child {
+  border-bottom-right-radius:0;
+  border-bottom-left-radius:0;
+}
+ pre {
+  background-color: #f7f7f7;
+  padding: 6px;
+  line-height: 1.5;
+ }
+  </style>
+</head>
+<body>
+
+<section style="width: 75%; margin: 1rem auto;">
+  <h2 style="border-bottom: 1px solid black;">Find Out the PPID Information </h2>
+  <p>You can find out the PPID of a process using several process management commands in Linux, such as pidof, pstree, and pgrep. Let us examine them one by one and see how to obtain the PID of a Linux process.</p>
+</section>
+
+<div class="faq">
+  <div class="faq-q">
+    <span>
+      <b>Method 1: Using the ps Command</b>
+    </span>
+    <p>
+      The ps command in Linux displays all running processes alongside other process-related information like the PID in the terminal. We can use this command to list all processes and then filter out a specific process by using Linux grep commands. It should show us the process id information we’re interested in.
+      <pre>&#36; ps aux | grep "nano"</pre>
+    </p>
+  </div>
+  <div class="faq-q">
+    <span>
+      <b>Method 2: Using the pstree Command</b>
+    </span>
+    <p>
+      The pstree command provides us a tree-like view of all running processes. It provides a graphical view of the Linux task list from the terminal window. You can view the PPID as well as all the PID information of a process using this command. Check out the below examples to learn how to leverage pstree for finding the PPID of a specific process.
+      <pre>&#36; pstree -p | grep 'nano' <br>&#36; pstree -p | awk '/nano/ {print &#36;NF}</pre>
+    </p>
+  </div>
+  <div class="faq-q">
+    <span>
+      <b>Method 3: Using the pgrep Command</b>
+    </span>
+    <p>
+      The pgrep command is one of the easiest process management commands in Linux. It checks the list of all running processes and prints out the PPID of a given process in the standard output or the terminal in our case. It works by performing regex matching and is extremely well suited for writing Linux shell scripts.
+      <pre>&#36; pgrep 'nano'</pre>
+    </p>
+  </div>
+  <div class="faq-q">
+    <span>
+      <b>Method 4: Using the pidof Command</b>
+    </span>
+    <p>
+      The pidof command is another simple but useful way of determining the PPID of a Linux process. It displays both the PPID and all other PIDs associated with a process. Check out the below examine to see how to use this in practice.
+      <pre>&#36; pidof nano <br>&#36; pidof -s nano</pre>
+      When using the pidof command to check running processes in Linux, you will often see multiple PIDs. Usually, in such cases, the first or the last number is the PPID, depending on whether they’re in an ascended order or in descendent order. You can use the -s option of pidof to mitigate this. It will display only the PPID value.
+    </p>
+  </div>
+  <div class="faq-q">
+    <span>
+      <b>Method 5: Using the top Command</b>
+    </span>
+    <p>
+      The top command provides a real-time view of all running processes in Unix-like operating systems. You can use this to display the Linux task list in your terminal and find out the PID information of a specific process.
+      <pre>&#36; top</pre>
+      Use the following commands to retrieve the PPID of a particular process from the output of the top command.
+      <pre>&#36; top -n1 -b | grep 'nano' <br>&#36; top -n1 -b | awk '/nano/ {print &#36;1}'</pre>
+      Since top provides real-time output instead of dumping static data to the terminal, we’ve used the -n1 and -b option to print the static output. Then you can retrieve the PPID information by using either the grep command or the awk command in Linux.
+    </p>
+  </div>
+ </div>
+
+
+<section style="width: 75%; margin: 1rem auto;">
+  <h2 style="border-bottom: 1px solid black;">Kill the Unresponsive Linux Process </h2>
+  <p>You can use any of the above methods to retrieve the PPID of the unresponsive process. Once you obtain this, it is time to kill the process altogether. There are several commands that allow us to do this, such as kill, pkill, and killall. We’ll see how they work one by one in the following sections.</p>
+</section>
+
+<div class="faq">
+  <div class="faq-q">
+    <span>
+      <b>Method 1: Using the kill Command</b>
+    </span>
+    <p>
+      The kill command is widely used by Linux admins due to its simplicity and robust actions. It takes the PID of the process and a signal. The kernel kills/halts the execution of the process based on this signal. You can use the next command to view all available signals to the kill command.
+      <pre>&#36; kill -l</pre>
+      As you can see, kill offers 64 different signals. However, we will only discuss two of them in this guide. These are signal 9(SIGKILL) and signal 15(SIGTERM). SIGTERM or signal 15 is the safe method of killing an unresponsive process. SIGKILL or signal 9, on the other hand, force kills a Linux process.
+      <pre>&#36; kill -9 8631 <br>&#36; kill -KILL 8631</pre>
+      The above commands are equivalent, and they will force kill the process that has the PID 8631. That is the PPID of the process ‘nano’ in my system. Replace this with the PID of the unresponsive process in your system.
+      <pre>&#36; kill -15 8631 <br>&#36; kill -TERM 8631</pre>
+      The above commands are also equivalent and will kill the process gracefully. That’s why it can take some time before the process is killed. Moreover, you may need to append sudo before the kill command if the process is owned by a different user.
+    </p>
+  </div>
+  <div class="faq-q">
+    <span>
+      <b>Method 2: Using the pkill Command</b>
+    </span>
+    <p>
+      The pkill command is one of the most versatile process management commands in Linux. It allows us to kill an unresponsive process based on its name, PID, owner, and other runtime attributes. It is a perfect tool for starting users or people who are not familiar with many standard terminal commands.
+      <pre>&#36; pkill nano <br>&#36; pkill 8631 <br>&#36; pkill -e nano <br>&#36; pkill -f nano</pre>
+      You may use any of the above pkill commands for killing a zombie/unresponsive process in Linux. Use the -e option if you want a confirmation on the Linux kill job. The pkill command also allows users to send specific terminating signals.
+    </p>
+  </div>
+  <div class="faq-q">
+    <span>
+      <b>Method 3: Using the killall Command</b>
+    </span>
+    <p>
+      The killall command allows users to kill unresponsive processes based on their names. It is easier to use but can pose troubles if you are not cautious. Since killall terminates processes based on names, there is always a chance that you end up killing a process by chance. For example, if there are different versions of nano available in your system, the first example will kill all of them.
+      <pre>&#36; killall nano <br>&#36; killall --verbose nano <br>&#36; killall --interactive nano <br>&#36; killall --signal KILL nano</pre>
+    </p>
+  </div>
+  <div class="faq-q">
+    <span>
+      <b>Method 4: Using Handy One-Liners</b>
+    </span>
+    <p>
+      The true beauty of Linux lies in the fact that it allows users to create sophisticated command combinations based on their needs. To demonstrate this, we have outlined a few one-liners in the section.
+      <pre>&#36; kill -9 &#36;(pgrep nano) <br>&#36; ps aux | grep -e 'nano' | awk '{print &#36;2}' | xargs kill -9</pre>
+      In the first example, we have used shell interpolation to pass the PID of the process ‘nano’ to the Linux kill command. The second example utilizes several everyday terminal commands and I/O redirection to kill off the process. You can curate your own nifty one-liners once you’re comfortable with the Linux terminal.
+    </p>
+  </div>
+  <div class="faq-q">
+    <span>
+      <b>Method 5: Kill Multiple Processes using Linux Shell Scripts</b>
+    </span>
+    <p>
+      Sometimes users might want to terminate more than a single process. We can easily automate such tasks by writing simple shell scripts. If you are interested in this topic, then check our previous guide on Linux shell scripts. The following script will retrieve the PPID of the processes you want to kill and then terminate them using kill signals.
+      <pre>&#36; vim proc-killer.sh</pre>
+      <pre>#!/usr/bin/env bash
+    for pro in "&#36;@"
+    do
+    pid=&#36;(pgrep &#36;pro | head -1)
+    echo &#36;pid
+    comm="kill -9 &#36;pid"
+    eval &#36;comm
+    done</pre>
+      Now, save this file and add execution permission by issuing the below command.
+      <pre>&#36; chmod +x proc-killer.sh</pre>
+      You can now pass this script the name of the processes you want to terminate.
+      <pre>&#36; ./proc-killer.sh nano gedit vlc</pre>
+      Simply replace the arguments with the names of the unresponsive Linux processes in your system.
+    </p>
+  </div>
+ </div>
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166768780-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166768780-1');
+</script>
+
+</body>
+</html>

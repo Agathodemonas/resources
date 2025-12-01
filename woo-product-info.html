@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WooCommerce: Get Product Info (ID, SKU, $) From $product Object</title>
+	<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<style>
+	code{
+		color: white;
+	}
+</style>
+</head>
+<body class="p-5">
+	<div id="page" class="container">
+
+		<div id="content" class="site-content" tabindex="-1">
+		<div class="col-full">
+		<div class="woocommerce"></div>
+		<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+		<article id="post-72711" class="post-72711 post type-post status-publish format-standard has-post-thumbnail hentry category-woocommerce-questions tag-backorder tag-price tag-single-product-page">
+		<header class="entry-header mb-5">
+		<h1 class="entry-title">WooCommerce: Get Product Info (ID, SKU, $) From $product Object</h1> <aside class="entry-meta">
+		<div class="cat-links">
+		&gt; Published: Jul 2017 - Revised: Sep 2021
+		<br>
+		&gt; Blog Category: <a href="https://www.businessbloomer.com/category/woocommerce-questions/" rel="category tag">WooCommerce Tutorials</a>
+				<br>
+		&gt; Blog Tags: <a href="https://www.businessbloomer.com/tag/backorder/" rel="tag">Backorder</a>, <a href="https://www.businessbloomer.com/tag/price/" rel="tag">Price</a>, <a href="https://www.businessbloomer.com/tag/single-product-page/" rel="tag">Single Product Page</a>
+		
+		</div>
+		</aside>
+		</header>
+		<div class="entry-content" itemprop="articleBody">
+		
+		<p>I’ve been wanting to publish this guide for a long while. As a WooCommerce development freelancer, every day I repeat many operations that make me waste time… and one of them is indeed “<em>How to get ____ if I have the $product variable/object?</em>“.</p>
+		<p>For example, “How can I get the <strong>product SKU</strong>“? Or “How can I get the <strong>product short description</strong>“? Or maybe the <strong>product stock</strong> level, shipping class, tax class, price, regular price, sale price, and so on… hopefully this article will save you time.</p>
+		<p>Of course, not always you have access to the $product variable (I’m talking about WooCommerce hooks for example), so you’re also required to understand your case scenario and see if you can “get” that $product object in another way.</p>
+		<p>For example, you might know the $product_id. In this case, you have to find a way to “get the $product object from $product_id” – you find this example below.</p>
+		
+		<span id="more-72711"></span>
+		<h2>1. You have access to $product variable</h2>
+		<p>Hooks (do_action and apply_filters) use additional arguments which are passed on to the function. If they allow you to use the “$product” object you’re in business. Alternatively, you can declare the “global $product” inside your function.</p>
+		<p>In both cases, here’s how to get all the product information:</p>
+		<div class="wp-block-syntaxhighlighter-code "><div><div id="highlighter_67897" class="syntaxhighlighter nogutter  php">
+			<table class="table table-dark">
+				<tbody>
+					<tr>
+						<td class="code">
+							<div class="container">
+								<div class="line number1 index0 alt2"><code class="php comments">// Get Product ID</code></div>
+								<div class="line number2 index1 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number3 index2 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_id();</code></div>
+								<div class="line number4 index3 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number5 index4 alt2"><code class="php comments">// Get Product General Info</code>
+								</div>
+								<div class="line number6 index5 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number7 index6 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_type();</code></div>
+								<div class="line number8 index7 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_name();</code></div>
+								<div class="line number9 index8 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_slug();</code></div>
+								<div class="line number10 index9 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_date_created();</code></div>
+								<div class="line number11 index10 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_date_modified();</code></div>
+								<div class="line number12 index11 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_status();</code></div>
+								<div class="line number13 index12 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_featured();</code></div>
+								<div class="line number14 index13 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_catalog_visibility();</code></div>
+								<div class="line number15 index14 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_description();</code></div>
+								<div class="line number16 index15 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_short_description();</code></div>
+								<div class="line number17 index16 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_sku();</code></div>
+								<div class="line number18 index17 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_menu_order();</code></div>
+								<div class="line number19 index18 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_virtual();</code></div>
+								<div class="line number20 index19 alt1"><code class="php plain">get_permalink( </code><code
+										class="php variable">$product</code><code class="php plain">-&gt;get_id() );</code></div>
+								<div class="line number21 index20 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number22 index21 alt1"><code class="php comments">// Get Product Prices</code>
+								</div>
+								<div class="line number23 index22 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number24 index23 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_price();</code></div>
+								<div class="line number25 index24 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_regular_price();</code></div>
+								<div class="line number26 index25 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_sale_price();</code></div>
+								<div class="line number27 index26 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_date_on_sale_from();</code></div>
+								<div class="line number28 index27 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_date_on_sale_to();</code></div>
+								<div class="line number29 index28 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_total_sales();</code></div>
+								<div class="line number30 index29 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number31 index30 alt2"><code
+										class="php comments">// Get Product Tax, Shipping &amp; Stock</code></div>
+								<div class="line number32 index31 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number33 index32 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_tax_status();</code></div>
+								<div class="line number34 index33 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_tax_class();</code></div>
+								<div class="line number35 index34 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_manage_stock();</code></div>
+								<div class="line number36 index35 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_stock_quantity();</code></div>
+								<div class="line number37 index36 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_stock_status();</code></div>
+								<div class="line number38 index37 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_backorders();</code></div>
+								<div class="line number39 index38 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_sold_individually();</code></div>
+								<div class="line number40 index39 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_purchase_note();</code></div>
+								<div class="line number41 index40 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_shipping_class_id();</code></div>
+								<div class="line number42 index41 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number43 index42 alt2"><code class="php comments">// Get Product Dimensions</code>
+								</div>
+								<div class="line number44 index43 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number45 index44 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_weight();</code></div>
+								<div class="line number46 index45 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_length();</code></div>
+								<div class="line number47 index46 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_width();</code></div>
+								<div class="line number48 index47 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_height();</code></div>
+								<div class="line number49 index48 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_dimensions();</code></div>
+								<div class="line number50 index49 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number51 index50 alt2"><code class="php comments">// Get Linked Products</code>
+								</div>
+								<div class="line number52 index51 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number53 index52 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_upsell_ids();</code></div>
+								<div class="line number54 index53 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_cross_sell_ids();</code></div>
+								<div class="line number55 index54 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_parent_id();</code></div>
+								<div class="line number56 index55 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number57 index56 alt2"><code
+										class="php comments">// Get Product Variations and Attributes</code></div>
+								<div class="line number58 index57 alt1">&nbsp;</div>
+								<div class="line number59 index58 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_children(); </code><code
+										class="php comments">// get variations</code></div>
+								<div class="line number60 index59 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_attributes();</code></div>
+								<div class="line number61 index60 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_default_attributes();</code></div>
+								<div class="line number62 index61 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_attribute( </code><code class="php string">'attributeid'</code>
+									<code class="php plain">); </code><code
+										class="php comments">//get specific attribute value</code></div>
+								<div class="line number63 index62 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number64 index63 alt1"><code class="php comments">// Get Product Taxonomies</code>
+								</div>
+								<div class="line number65 index64 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number66 index65 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_categories();</code></div>
+								<div class="line number67 index66 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_category_ids();</code></div>
+								<div class="line number68 index67 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_tag_ids();</code></div>
+								<div class="line number69 index68 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number70 index69 alt1"><code class="php comments">// Get Product Downloads</code>
+								</div>
+								<div class="line number71 index70 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number72 index71 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_downloads();</code></div>
+								<div class="line number73 index72 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_download_expiry();</code></div>
+								<div class="line number74 index73 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_downloadable();</code></div>
+								<div class="line number75 index74 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_download_limit();</code></div>
+								<div class="line number76 index75 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number77 index76 alt2"><code class="php comments">// Get Product Images</code>
+								</div>
+								<div class="line number78 index77 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number79 index78 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_image_id();</code></div>
+								<div class="line number80 index79 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_image();</code></div>
+								<div class="line number81 index80 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_gallery_image_ids();</code></div>
+								<div class="line number82 index81 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number83 index82 alt2"><code class="php comments">// Get Product Reviews</code>
+								</div>
+								<div class="line number84 index83 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number85 index84 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_reviews_allowed();</code></div>
+								<div class="line number86 index85 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_rating_counts();</code></div>
+								<div class="line number87 index86 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_average_rating();</code></div>
+								<div class="line number88 index87 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_review_count();</code></div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div></div></div>
+		<h2>2. You have access to $product_id</h2>
+		<p>If you have access to the product ID (once again, usually the do_action or apply_filters will make this possible to you), you have to get the product object first. Then, do the exact same things as above.</p>
+		<div class="wp-block-syntaxhighlighter-code "><div><div id="highlighter_963238" class="syntaxhighlighter nogutter  php">
+			<table class="table table-dark">
+				<tbody>
+					<tr>
+						<td class="code">
+							<div class="container">
+								<div class="line number1 index0 alt2"><code
+										class="php comments">// Get $product object from product ID</code></div>
+								<div class="line number2 index1 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number3 index2 alt2"><code class="php variable">$product</code> <code
+										class="php plain">= wc_get_product( </code><code class="php variable">$product_id</code>
+									<code class="php plain">);</code></div>
+								<div class="line number4 index3 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number5 index4 alt2"><code
+										class="php comments">// Now you have access to (see above)...</code></div>
+								<div class="line number6 index5 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number7 index6 alt2"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_type();</code></div>
+								<div class="line number8 index7 alt1"><code class="php variable">$product</code><code
+										class="php plain">-&gt;get_name();</code></div>
+								<div class="line number9 index8 alt2"><code class="php comments">// etc.</code></div>
+								<div class="line number10 index9 alt1"><code class="php comments">// etc.</code></div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div></div></div>
+		<h2>3. You have access to the Order object or Order ID</h2>
+		<p>How to get the product information inside the Order? In this case you will need to loop through all the items present in the order, and then apply the rules above.</p>
+		<div class="wp-block-syntaxhighlighter-code "><div><div id="highlighter_977229" class="syntaxhighlighter nogutter  php">
+			<table class="table table-dark">
+				<tbody>
+					<tr>
+						<td class="code">
+							<div class="container">
+								<div class="line number1 index0 alt2"><code
+										class="php comments">// Get $product object from $order / $order_id</code></div>
+								<div class="line number2 index1 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number3 index2 alt2"><code class="php variable">$order</code> <code
+										class="php plain">= wc_get_order( </code><code class="php variable">$order_id</code> <code
+										class="php plain">);</code></div>
+								<div class="line number4 index3 alt1"><code class="php variable">$items</code> <code
+										class="php plain">= </code><code class="php variable">$order</code><code
+										class="php plain">-&gt;get_items();</code></div>
+								<div class="line number5 index4 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number6 index5 alt1"><code class="php keyword">foreach</code> <code
+										class="php plain">( </code><code class="php variable">$items</code> <code
+										class="php keyword">as</code> <code class="php variable">$item</code> <code
+										class="php plain">) {</code></div>
+								<div class="line number7 index6 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number8 index7 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+										class="php variable">$product</code> <code class="php plain">= </code><code
+										class="php variable">$item</code><code class="php plain">-&gt;get_product();</code></div>
+								<div class="line number9 index8 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number10 index9 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+										class="php comments">// Now you have access to (see above)...</code></div>
+								<div class="line number11 index10 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number12 index11 alt1"><code
+										class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+										class="php variable">$product</code><code class="php plain">-&gt;get_type();</code></div>
+								<div class="line number13 index12 alt2"><code
+										class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+										class="php variable">$product</code><code class="php plain">-&gt;get_name();</code></div>
+								<div class="line number14 index13 alt1"><code
+										class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php comments">// etc.</code>
+								</div>
+								<div class="line number15 index14 alt2"><code
+										class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php comments">// etc.</code>
+								</div>
+								<div class="line number16 index15 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number17 index16 alt2"><code class="php plain">}</code></div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div></div></div>
+		<p>If you wish to expand your knowledge, here’s an other <a href="https://businessbloomer.com/woocommerce-easily-get-order-info-total-items-etc-from-order-object/">article on how to get additional info out of the $order object</a>.</p>
+		<h2>4. You have access to the Cart object</h2>
+		<p>How to get the product information inside the Cart? In this case, once again, you will need to loop through all the items present in the cart, and then apply the rules above.</p>
+		<div class="wp-block-syntaxhighlighter-code "><div><div id="highlighter_593267" class="syntaxhighlighter nogutter  php">
+			<table class="table table-dark">
+				<tbody>
+					<tr>
+						<td class="code">
+							<div class="container">
+								<div class="line number1 index0 alt2"><code
+										class="php comments">// Get $product object from Cart object</code></div>
+								<div class="line number2 index1 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number3 index2 alt2"><code class="php variable">$cart</code> <code
+										class="php plain">= WC()-&gt;cart-&gt;get_cart();</code></div>
+								<div class="line number4 index3 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number5 index4 alt2"><code class="php keyword">foreach</code><code
+										class="php plain">( </code><code class="php variable">$cart</code> <code
+										class="php keyword">as</code> <code class="php variable">$cart_item_key</code> <code
+										class="php plain">=&gt; </code><code class="php variable">$cart_item</code> <code
+										class="php plain">){</code></div>
+								<div class="line number6 index5 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number7 index6 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+										class="php variable">$product</code> <code class="php plain">= </code><code
+										class="php variable">$cart_item</code><code class="php plain">[</code><code
+										class="php string">'data'</code><code class="php plain">];</code></div>
+								<div class="line number8 index7 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number9 index8 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+										class="php comments">// Now you have access to (see above)...</code></div>
+								<div class="line number10 index9 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number11 index10 alt2"><code
+										class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+										class="php variable">$product</code><code class="php plain">-&gt;get_type();</code></div>
+								<div class="line number12 index11 alt1"><code
+										class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+										class="php variable">$product</code><code class="php plain">-&gt;get_name();</code></div>
+								<div class="line number13 index12 alt2"><code
+										class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php comments">// etc.</code>
+								</div>
+								<div class="line number14 index13 alt1"><code
+										class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code class="php comments">// etc.</code>
+								</div>
+								<div class="line number15 index14 alt2"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+								<div class="line number16 index15 alt1"><code class="php plain">}</code></div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div></div></div>
+		<p>If you wish to expand your WooCommerce PHP knowledge, here’s an other article on <a href="https://businessbloomer.com/woocommerce-get-cart-info-total-items-etc-from-cart-object/">how to get additional info out of the $cart object</a>.</p>
+		<h2>5. You have access to $post object</h2>
+		<p>In certain cases (e.g. the backend) you can only get access to $post. So, how do we “calculate” $product from $post? Easy peasy:</p>
+		<div class="wp-block-syntaxhighlighter-code ">
+			<div>
+				<div id="highlighter_216081" class="syntaxhighlighter nogutter  php">
+					<table class="table table-dark">
+						<tbody>
+							<tr>
+								<td class="code">
+									<div class="container">
+										<div>
+											<code>// Get $product object from $post object</code>
+										</div>
+										<div><code>&nbsp;</code>&nbsp;</div>
+										<div><code class="php variable">$product</code> 
+											<code>= wc_get_product( </code>
+											<code>$post</code> <code class="php plain">);</code>
+										</div>
+										<div class="line number4 index3 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+										<div class="line number5 index4 alt2"><code
+												class="php comments">// Now you have access to (see above)...</code></div>
+										<div class="line number6 index5 alt1"><code class="php spaces">&nbsp;</code>&nbsp;</div>
+										<div class="line number7 index6 alt2"><code class="php variable">$product</code><code
+												class="php plain">-&gt;get_type();</code></div>
+										<div class="line number8 index7 alt1"><code class="php variable">$product</code><code
+												class="php plain">-&gt;get_name();</code></div>
+										<div class="line number9 index8 alt2"><code class="php comments">// etc.</code></div>
+										<div class="line number10 index9 alt1"><code class="php comments">// etc.</code></div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<p></p>
+		
+		</div>
+						
+		</article>
+		</main>
+		</div>
+
+		</div>
+		</div>
+		
+		</div>
+</body>
+</html>

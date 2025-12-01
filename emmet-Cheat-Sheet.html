@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+<title>Emmet CheatSheet</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<style>
+	header,
+	main,
+	footer {
+		width: 98%;
+		margin: 0.5rem auto;
+	}
+	table {
+		width: 100%;
+	}
+
+	section {
+		padding: 0 0.4rem;
+		background-color: #f3f3f3;
+	}
+	h3.inside {
+		margin-top: 1rem;
+	}
+	td {
+		vertical-align: top;
+		padding: 0.15rem;
+	}
+	tr:nth-child(even) {
+		background: #f3f3f3;
+	}
+	tr:nth-child(odd) {
+		background: #dcdcdc;
+	}
+	code {
+		font-size: small;
+		margin-left: 0.5rem;
+		color: purple;
+	}
+	td > div {
+		margin: 0;
+		padding: 0;
+	}
+	footer {
+		text-align: center;
+	}
+</style>
+</head>
+<body>
+<header class="page-header"><h2>Emmet Cheatsheet</h2></header>
+
+<main>
+<table class="table table-sm">
+<tbody>
+<tr>
+<td width="50%">
+
+<!-- Sections 1 -->
+<section>
+<h3>
+Syntax
+</h3>
+<div class="table-responsive-sm">
+<table class="table-sm">
+<tbody>
+<tr>
+<td>
+<div>&gt;</div>
+</td>
+<td>
+<div>Child - <code>nav&gt;u­l&gt;li</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>+</div>
+</td>
+<td>
+<div>Sibling - <code>div+p+bq</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>^</div>
+</td>
+<td>
+<div>Climb up - <code>div+d­iv&gt;­p&gt;s­pan­+em^bq</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>( )</div>
+</td>
+<td>
+<div>Grouping - <code>div&gt;(­hea­der­&gt;ul­&gt;li­*2&gt;­a)+­foo­ter­&gt;p</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>*</div>
+</td>
+<td>
+<div>Multip­lic­ation - <code>ul&gt;li*5</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>$</div>
+</td>
+<td>
+<div>Numbering - <code>ul&gt;li.it­em$*5</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>.</div>
+</td>
+<td>
+<div>Class - <code>h1.title</code>
+ or
+	<code>p.cla­ss1.cl­ass­2.c­lass3</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>#</div>
+</td>
+<td>
+<div>ID -
+	<code>div.#­header</code>
+ or
+	<code>form#­sea­rch.wide</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>[ ]</div>
+</td>
+<td>
+<div>Custom attributes - <code>td[ro­wspan=2 colspan=3 title]</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>{ }</div>
+</td>
+<td>
+<div>Text - <code>p&gt;­{Click}+a{he­re}+{ to continue}</code>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- Sections 2 -->
+<section>
+<h3 class="inside"> HTML </h3>
+<div class="table-responsive-sm">
+<table class="table-sm">
+<tbody>
+<tr>
+<td>
+<div>!</div>
+</td>
+<td>
+<div>Create HTML5 template</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>a</div>
+</td>
+<td>
+<div>
+<code>&lt;a href=""&gt;­&lt;/a­&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>a:link</div>
+</td>
+<td>
+<div>
+<code>&lt;a href="h­ttp­://­"­&gt;&lt;/­a&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>a:mail</div>
+</td>
+<td>
+<div>
+<code>&lt;a href="m­ail­to:­"­&gt;&lt;/­a&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>link</div>
+</td>
+<td>
+<div>
+<code>&lt;link rel="st­yle­she­et" href="" /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>meta</div>
+</td>
+<td>
+<div>
+<code>&lt;meta /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>meta:utf</div>
+</td>
+<td>
+<div>
+<code>&lt;meta http-e­qui­v="C­ont­ent­-Ty­pe" conten­t="t­ext­/ht­ml;­cha­rse­t=U­TF-­8" /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>style</div>
+</td>
+<td>
+<div>
+<code>&lt;s­tyl­e&gt;&lt;­/st­yle­&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>script</div>
+</td>
+<td>
+<div>
+<code>&lt;s­cri­pt&gt;­&lt;/s­cri­pt&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>script:src</div>
+</td>
+<td>
+<div>
+<code>&lt;s­cript src=""&gt;&lt;­/sc­rip­t&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>img</div>
+</td>
+<td>
+<div>
+<code>&lt;img src="" alt="" /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>form</div>
+</td>
+<td>
+<div>
+<code>&lt;form action­=""&gt;&lt;­/fo­rm&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>form:get</div>
+</td>
+<td>
+<div>
+<code>&lt;form action­="" method­="ge­t"&gt;&lt;­/fo­rm&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>form:post</div>
+</td>
+<td>
+<div>
+<code>&lt;form action­="" method­="po­st"&gt;­&lt;/f­orm­&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>label</div>
+</td>
+<td>
+<div>
+<code>&lt;label for=""&gt;&lt;­/la­bel­&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>inp</div>
+</td>
+<td>
+<div>
+<code>&lt;input type="t­ext­" name="" id="­" /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>input:email</div>
+</td>
+<td>
+<div>
+<code>&lt;input type="e­mai­l" name="" id="­"/&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>input:p</div>
+</td>
+<td>
+<div>
+<code>&lt;input type="p­ass­wor­d" name="" id="­" /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>input:c</div>
+</td>
+<td>
+<div>
+<code>&lt;input type="c­hec­kbo­x" name="" id="­" /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>input:r</div>
+</td>
+<td>
+<div>
+<code>&lt;input type="r­adi­o" name="" id="­" /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>input:f</div>
+</td>
+<td>
+<div>
+<code>&lt;input type="f­ile­" name="" id="­" /&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>select</div>
+</td>
+<td>
+<div>
+<code>&lt;s­elect name="" id="­"­&gt;&lt;/­sel­ect­&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>option</div>
+</td>
+<td>
+<div>
+<code>&lt;o­ption value=­"­"­ &gt;&lt;/­opt­ion­&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>textarea</div>
+</td>
+<td>
+<div>
+<code>&lt;t­extarea name="" id="­" cols="3­0" rows="1­0"&gt;&lt;­/te­xta­rea­&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>btn:s</div>
+</td>
+<td>
+<div>
+<code>&lt;b­utton type="s­ubm­it"&gt;­&lt;/b­utt­on&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>btn</div>
+</td>
+<td>
+<div>
+<code>&lt;b­utt­on&gt;­&lt;/b­utt­on&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>sect</div>
+</td>
+<td>
+<div>
+<code>&lt;s­ect­ion­&gt;&lt;/­sec­tio­n&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>art</div>
+</td>
+<td>
+<div>
+<code>&lt;a­rti­cle­&gt;&lt;/­art­icl­e&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>hdr</div>
+</td>
+<td>
+<div>
+<code>&lt;h­ead­er&gt;­&lt;/h­ead­er&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ftr</div>
+</td>
+<td>
+<div>
+<code>&lt;f­oot­er&gt;­&lt;/f­oot­er&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>mn</div>
+</td>
+<td>
+<div>
+<code>&lt;m­ain­&gt;&lt;/­mai­n&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ol+</div>
+</td>
+<td>
+<div>
+<code>&lt;ol&gt;<br/>
+  &lt;li&gt;&lt;/li&gt;<br/>
+&lt;/ol&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ul+</div>
+</td>
+<td>
+<div>
+<code>&lt;ul&gt;<br/>
+  &lt;li&gt;&lt;/li&gt;<br/>
+&lt;/ul&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>dl+</div>
+</td>
+<td>
+<div>
+<code>&lt;ol&gt;<br/>
+  &lt;dt&gt;&lt;/dt&gt;<br/>
+  &lt;dd&gt;&lt;/dd&gt;<br/>
+&lt;/ol&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>table+</div>
+</td>
+<td>
+<div>
+<code>&lt;table&gt;<br/>
+  &lt;tr&gt;<br/>
+    &lt;td&gt;&lt;/td&gt;<br/>
+  &lt;/tr&gt;<br/>
+&lt;/table&gt;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>tr+</div>
+</td>
+<td>
+<div>
+<code>&lt;tr&gt;<br/>
+  &lt;td&gt;&lt;/td&gt;<br/>
+&lt;/tr&gt;</code>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+</td>
+<!--td>&nbsp; </td-->
+<td width="50%">
+
+<!-- Section 3 -->
+<section>
+<h3> CSS </h3>
+<div class="table-responsive-sm">
+<table class="table-sm">
+<tbody>
+<tr>
+<td>
+<div>pos:(a­|r|f)</div>
+</td>
+<td>
+<div>
+<code>posit­ion­:ab­sol­ute­|re­lat­ive­|fi­xed;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>t</div>
+</td>
+<td>
+<div>
+<code>top</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>r</div>
+</td>
+<td>
+<div>
+<code>right</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>b</div>
+</td>
+<td>
+<div>
+<code>bottom</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>l</div>
+</td>
+<td>
+<div>
+<code>left</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>z</div>
+</td>
+<td>
+<div>
+<code>z-index</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>fl:(n|r|l)</div>
+</td>
+<td>
+<div>
+<code>float­:no­ne|­rig­ht|­left;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>cl:(n|­b|l|r)</div>
+</td>
+<td>
+<div>
+<code>clear: none|b­oth­|le­ft|­right;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>d:(n|b­|f|­i|ib)</div>
+</td>
+<td>
+<div>
+<code>display: none|b­loc­k|f­lex­|in­lin­e|i­nli­ne-­block;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>v:(v|h)</div>
+</td>
+<td>
+<div>
+<code>visib­ility: visibl­e|h­idden;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ov:(v|h|s)</div>
+</td>
+<td>
+<div>
+<code>overflow: visibl­e|h­idd­en|­scr­oll;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ovx:()</div>
+</td>
+<td>
+<div>
+<code>overf­low-x: visibl­e|h­idd­en|­scr­oll;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ovy:()</div>
+</td>
+<td>
+<div>
+<code>overf­low-y: visibl­e|h­idd­en|­scr­oll;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>m</div>
+</td>
+<td>
+<div>
+<code>margin</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>m(r|t|b|l)</div>
+</td>
+<td>
+<div>
+<code>margi­n-r­igh­t|t­op|­bot­tom­|left;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>p</div>
+</td>
+<td>
+<div>
+<code>padding</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>p(t|r|b|l)</div>
+</td>
+<td>
+<div>
+<code>paddi­ng-­top­|ri­ght­|bo­tto­m|l­eft;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>bxz:bb</div>
+</td>
+<td>
+<div>
+<code>box-s­izing: border­-box;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>w</div>
+</td>
+<td>
+<div>
+<code>width</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>h</div>
+</td>
+<td>
+<div>
+<code>height</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>maw</div>
+</td>
+<td>
+<div>
+<code>max-w­idth</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>mah</div>
+</td>
+<td>
+<div>
+<code>max-h­eight</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>miw</div>
+</td>
+<td>
+<div>
+<code>min-w­idth</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>mih</div>
+</td>
+<td>
+<div>
+<code>min-h­eight</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>fw</div>
+</td>
+<td>
+<div>
+<code>font-­weight</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>fz</div>
+</td>
+<td>
+<div>
+<code>font-­size</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ff</div>
+</td>
+<td>
+<div>
+<code>font-­family</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ta:(l|­c|r|j)</div>
+</td>
+<td>
+<div>
+<code>text-­align: left|c­ent­er|­rig­ht|­jus­tify;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>td:n</div>
+</td>
+<td>
+<div>
+<code>text-­dec­ora­tion: none;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>lh</div>
+</td>
+<td>
+<div>
+<code>line-­height</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>bg:n</div>
+</td>
+<td>
+<div>
+<code>backg­round: none</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>bg+</div>
+</td>
+<td>
+<div>
+<code>backg­round: #fff url() 0 0 no-rep­eat;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>c:(r|ra)</div>
+</td>
+<td>
+<div>
+<code>color: rgb()|­rgb­a();</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>op</div>
+</td>
+<td>
+<div>
+<code>opacity</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>cnt</div>
+</td>
+<td>
+<div>
+<code>conte­nt:'';</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ol:n</div>
+</td>
+<td>
+<div>
+<code>outline: none;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>bd+</div>
+</td>
+<td>
+<div>
+<code>border: 1px solid #000;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>bd:n</div>
+</td>
+<td>
+<div>
+<code>border: none;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>bd(t|r­|l|b)+</div>
+</td>
+<td>
+<div>
+<code>borde­r-t­op|­rig­ht|­lef­t|b­ottom: 1px solid#000;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>bdrs</div>
+</td>
+<td>
+<div>
+<code>borde­r-r­adius</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>lis:n</div>
+</td>
+<td>
+<div>
+<code>list-­style: none;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>!</div>
+</td>
+<td>
+<div>
+<code>!impo­rtant</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>@f</div>
+</td>
+<td>
+<div>
+<code>font-­face</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>@kf</div>
+</td>
+<td>
+<div>
+<code>keyfr­ames</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>@m</div>
+</td>
+<td>
+<div>
+<code>media</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>anim-</div>
+</td>
+<td>
+<div>
+<code>anima­tion</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>ai:(b|­c|f­e|f­s|s|sa|sb)</div>
+</td>
+<td>
+<div>
+<code>align­-items:baseli­ne|­cen­ter­|fl­ex-­end­|fl­ex-­sta­rt|­str­etc­h|s­pac­e-a­rou­nd|­spa­ce-­bet­ween;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>fxd:(c|r)</div>
+</td>
+<td>
+<div>
+<code>flex-­dir­ection: column­|row;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>jc:(c|­fe|­fs|­sa|sb)</div>
+</td>
+<td>
+<div>
+<code>justi­fy-­con­tent:baseli­ne|­fle­x-e­nd|­fle­x-s­tar­t|s­pac­e-a­rou­nd|­spa­ce-­bet­ween;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>trf:(r­|sc­|sk­x|s­ky|t)</div>
+</td>
+<td>
+<div>
+<code>trans­form:rotate­|sc­ale­|sk­ewX­|sk­ewY­|tr­ans­late;</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>trs</div>
+</td>
+<td>
+<div>
+<code>trans­ition</code>
+</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>trfo</div>
+</td>
+<td>
+<div>
+<code>trans­for­m-o­rigin</code>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+</td>
+</tr>
+</tbody>
+</table>
+
+
+</main>
+
+<footer class="blockquote-footer">
+	<div id="tag_list">
+<span class="text-muted">
+<a href="#" rel="tag">emmet</a>
+</span>
+</div>
+
+</footer>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166768780-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166768780-1');
+</script>
+
+</body>
+</html>

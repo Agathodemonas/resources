@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Timebook</title>
+    <link rel="stylesheet" href="css/timebook.css" type="text/css" />
+</head>
+<body>
+    <h1>Timebook</h1>
+      <div class="clearfix"></div>
+    <section id="wiki-content">
+      <h1 class="title">home page >>> https://bitbucket.org/trevor/timebook/wiki/Home</h1>
+<p>Timebook is a small utility which aims to be a low-overhead way of
+tracking what you spend time on. It can be used to prepare annotated
+time logs of work for presentation to a client, or simply track how you
+spend your free time. Timebook is implemented as a python script which
+maintains its state in a sqlite3 database.</p>
+<div class="section" id="concepts">
+<h2>Concepts</h2>
+<p>Timebook maintains a list of <em>timesheets</em> -- distinct lists of timed
+<em>periods</em>. Each period has a start and end time, with the exception of the
+most recent period, which may have no end time set. This indicates that
+this period is still running. Timesheets containing such periods are
+considered <em>active</em>. It is possible to have multiple timesheets active
+simultaneously, though a single time sheet may only have one period
+running at once.</p>
+<p>Interactions with timebook are performed through the <tt class="docutils literal">t</tt> command on
+the command line. <tt class="docutils literal">t</tt> is followed by one of timebook's subcommands.
+Often used subcommands include <tt class="docutils literal">in</tt>, <tt class="docutils literal">out</tt>, <tt class="docutils literal">switch</tt>, <tt class="docutils literal">now</tt>,
+<tt class="docutils literal">list</tt> and <tt class="docutils literal">display</tt>. Commands may be abbreviated as long as they
+are unambiguous: thus <tt class="docutils literal">t switch foo</tt> and <tt class="docutils literal">t s foo</tt> are identical.
+With the default command set, no two commands share the first same
+letter, thus it is only necessary to type the first letter of a command.
+Likewise, commands which display timesheets accept abbreviated timesheet
+names. <tt class="docutils literal">t display f</tt> is thus equivalent to <tt class="docutils literal">t display foo</tt> if
+<tt class="docutils literal">foo</tt> is the only timesheet which begins with "f". Note that this does
+not apply to <tt class="docutils literal">t switch</tt>, since this command also creates timesheets.
+(Using the earlier example, if <tt class="docutils literal">t switch f</tt> is entered, it would thus
+be ambiguous whether a new timesheet <tt class="docutils literal">f</tt> or switching to the existing
+timesheet <tt class="docutils literal">foo</tt> was desired).</p>
+</div>
+<div class="section" id="usage">
+<h2>Usage</h2>
+<p>The basic usage is as follows:</p>
+<pre class="literal-block">$ t switch writing
+$ t in document timebook
+$ t out
+</pre>
+<p>The first command, <tt class="docutils literal">t switch writing</tt>, switches to the timesheet
+"writing" (or creates it if it does not exist). <tt class="docutils literal">t in document
+timebook</tt> creates a new period in the current timesheet, and annotates
+it with the description "document timebook". Note that this command
+would be in error if the <tt class="docutils literal">writing</tt> timesheet was already active.
+Finally, <tt class="docutils literal">t out</tt> records the current time as the end time for the
+most recent period in the <tt class="docutils literal">writing</tt> timesheet.</p>
+<p>To display the current timesheet, invoke the <tt class="docutils literal">t display</tt> command:</p>
+<pre class="literal-block">$ t display
+Timesheet writing:
+Day            Start      End        Duration   Notes
+Mar 14, 2009   19:53:30 - 20:06:15   0:12:45    document timebook
+               20:07:02 -            0:00:01    write home about timebook
+                                     0:12:46
+Total                                0:12:46
+</pre>
+<p>Each period in the timesheet is listed on a row. If the timesheet is
+active, the final period in the timesheet will have no end time. After
+each day, the total time tracked in the timesheet for that day is
+listed. Note that this is computed by summing the durations of the
+periods beginning in the day. In the last row, the total time tracked in
+the timesheet is shown.</p>
+</div>
+<div class="section" id="commands">
+<h2>Commands</h2>
+<dl class="docutils">
+<dt><strong>alter</strong></dt>
+<dd><p class="first">Inserts a note associated with the currently active period in the
+timesheet.</p>
+<p>usage: <tt class="docutils literal">t alter <span class="pre">NOTES...</span></tt></p>
+<p class="last">aliases: <em>write</em></p>
+</dd>
+<dt><strong>backend</strong></dt>
+<dd><p class="first">Run an interactive database session on the timebook database. Requires
+the sqlite3 command.</p>
+<p>usage: <tt class="docutils literal">t backend</tt></p>
+<p class="last">aliases: <em>shell</em></p>
+</dd>
+<dt><strong>display</strong></dt>
+<dd><p class="first">Display a given timesheet. If no timesheet is specified, show the
+current timesheet.</p>
+<p>usage: <tt class="docutils literal">t display [TIMESHEET]</tt></p>
+<p class="last">aliases: <em>show</em></p>
+</dd>
+<dt><strong>format</strong></dt>
+<dd><p class="first">Export the current sheet as a comma-separated value format
+spreadsheet.  If the final entry is active, it is ignored.</p>
+<p>If a specific timesheet is given, display the same information for
+that timesheet instead.</p>
+<p>usage: <tt class="docutils literal">t format <span class="pre">[--start</span> DATE] <span class="pre">[--end</span> DATE] [TIMESHEET]</tt></p>
+<p class="last">aliases: <em>csv</em>, <em>export</em></p>
+</dd>
+<dt><strong>in</strong></dt>
+<dd><p class="first">Start the timer for the current timesheet. Must be called before out.
+Notes may be specified for this period. This is exactly equivalent to
+<tt class="docutils literal">t in; t alter NOTES</tt></p>
+<p>usage: <tt class="docutils literal">t in <span class="pre">[--switch</span> TIMESHEET] <span class="pre">[NOTES...]</span></tt></p>
+<p class="last">aliases: <em>start</em></p>
+</dd>
+<dt><strong>kill</strong></dt>
+<dd><p class="first">Delete a timesheet. If no timesheet is specified, delete the current
+timesheet and switch to the default timesheet.</p>
+<p>usage: <tt class="docutils literal">t kill [TIMESHEET]</tt></p>
+<p class="last">aliases: <em>delete</em></p>
+</dd>
+<dt><strong>list</strong></dt>
+<dd><p class="first">List the available timesheets.</p>
+<p>usage: <tt class="docutils literal">t list</tt></p>
+<p class="last">aliases: <em>ls</em></p>
+</dd>
+<dt><strong>now</strong></dt>
+<dd><p class="first">Print the current sheet, whether it's active, and if so, how long it
+has been active and what notes are associated with the current period.</p>
+<p>If a specific timesheet is given, display the same information for
+that timesheet instead.</p>
+<p>usage: <tt class="docutils literal">t now <span class="pre">[--simple]</span> [TIMESHEET]</tt></p>
+<p class="last">aliases: <em>info</em></p>
+</dd>
+<dt><strong>out</strong></dt>
+<dd><p class="first">Stop the timer for the current timesheet. Must be called after in.</p>
+<p>usage: <tt class="docutils literal">t out <span class="pre">[--verbose]</span> [TIMESHEET]</tt></p>
+<p class="last">aliases: <em>stop</em></p>
+</dd>
+<dt><strong>running</strong></dt>
+<dd><p class="first">Print all active sheets and any messages associated with them.</p>
+<p>usage: <tt class="docutils literal">t running</tt></p>
+<p class="last">aliases: <em>active</em></p>
+</dd>
+<dt><strong>switch</strong></dt>
+<dd><p class="first">Switch to a new timesheet. this causes all future operation (except
+switch) to operate on that timesheet. The default timesheet is called
+"default".</p>
+<p class="last">usage: <tt class="docutils literal">t switch TIMESHEET</tt></p>
+</dd>
+</dl>
+</div>
+
+
+    </section>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166768780-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166768780-1');
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>WordPress: Customise Admin Dashboard</title>
+  <!--link rel="stylesheet" href="https://inner-wise.com/help/css/normalize.css"-->
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <style type="text/css">
+    /*Base Styles*/
+    body {
+      font: 13px Verdana, Arial, Helvetica, sans-serif;
+      background-color: #989898;
+      color: #333333;
+    }
+
+    article {
+      width: 80%;
+      background-color: #fff;
+      padding: 10px;
+      margin: 10px auto;
+    }
+
+    code {
+      font-size: 15px;
+      font-size: 0.9375rem;
+      padding: 3px 10px;
+      position: relative;
+      top: -1px;
+      border-radius: 3px;
+      background-color: #f1f1f1;
+    }
+
+    code,
+    kbd,
+    tt,
+    var,
+    samp,
+    pre {
+      font-family: Menlo, Consolas, monaco, monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <article class="post article">
+    <div class="post-title-and-body view view--loaded">
+      <h1 class="post-title-and-body__title">Customizing Your WordPress Admin</h1>
+      <p>The backend of WordPress is one of the better ones out there. However, depending on your needs, the menu can be
+        a little crowded with fluff that you just don't want or need there.</p>
+      <p>In this tutorial, I am going to show you how to tame your admin menu. I will show you how to rename menus,
+        reorder the menus, or just plain eliminate them without touching core. Because touching core is bad.
+        <!--more-->
+      </p>
+      <hr>
+      <h2>Renaming Menus</h2>
+      <p>At times you may want to rename one of the admin menus. For example, you are running a recipe site, and you are
+        using "Posts" to list recipes rather than for a blog.</p>
+      <p>To do this, you will need to use the <em>admin_menu</em> action hook. It is used for adding submenus to the
+        admin menu, or other miscellaneous options having to do the with the menu.</p>
+      <h3>Renaming top level menus</h3>
+      <p>First, you need to create a function and then attach it to the action hook inside the
+        <code>functions.php</code> of your theme.</p>
+      <div>
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="code">
+                <code>
+function edit_admin_menus() {<br>
+    global $menu;<br>
+}<br>
+add_action( 'admin_menu', 'edit_admin_menus' );<br>
+</code>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The WordPress admin menu is actually stored in an array ($menu). So first as you see,
+        <code>edit_admin_menus</code> uses $menu global to get the array. Now you will need to pinpoint the key
+        associated with the menu you want to rename. A list of all menus and submenus will be provided at the end of
+        this tutorial.</p>
+      <p>Since we wanted to change the "Posts" menu to "Recipes", we know that we need to target "5":</p>
+
+      <table border="0" cellpadding="0" cellspacing="0" summary="">
+        <tbody>
+          <tr>
+            <td class="code">
+              <code>
+
+function edit_admin_menus() {<br>
+    global $menu;<br>
+    $menu[5][0] = 'Recipes'; // Change Posts to Recipes<br>
+}<br>
+add_action( 'admin_menu', 'edit_admin_menus' );
+</td>
+</tr>
+</tbody>
+</table>
+<p>Believe it or not, that's all there is to it.  Save <code>functions.php</code>, and refresh the admin page. But now
+              the submenus don't match the new name.</p>
+              <h3>Renaming Submenus</h3>
+              <p>Renaming submenus is almost the same process, except that you need to add the $submenu global, and you
+                will be targeting the link URI as well. So for example, changing "All Posts" to "All Recipes" would look
+                something like this:</p>
+              <div>
+                <div id="highlighter_613999" class="syntaxhighlighter php">
+                  <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td class="gutter">
+                          <div class="line number1 index0 alt2">1</div>
+                        </td>
+                        <td class="code">
+                          <div class="container">
+                            <div class="line number1 index0 alt2"><code class="php variable">$submenu</code><code
+                                class="php plain">[</code><code class="php string">'edit.php'</code><code
+                                class="php plain">][5][0] = </code><code class="php string">'All Recipes'</code><code
+                                class="php plain">;</code></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <p>You can do this for every submenu item. All together, <code>edit_admin_menus</code> would look
+                something like this</p>
+              <div>
+                <div id="highlighter_747920" class="syntaxhighlighter php">
+                  <table border="0" cellpadding="0" cellspacing="0">
+                    <tbody>
+                      <tr>
+                        <td class="gutter">
+                          <div class="line number1 index0 alt2">01</div>
+                          <div class="line number2 index1 alt1">02</div>
+                          <div class="line number3 index2 alt2">03</div>
+                          <div class="line number4 index3 alt1">04</div>
+                          <div class="line number5 index4 alt2">05</div>
+                          <div class="line number6 index5 alt1">06</div>
+                          <div class="line number7 index6 alt2">07</div>
+                          <div class="line number8 index7 alt1">08</div>
+                          <div class="line number9 index8 alt2">09</div>
+                          <div class="line number10 index9 alt1">10</div>
+                          <div class="line number11 index10 alt2">11</div>
+                        </td>
+                        <td class="code">
+                          <div class="container">
+                            <div class="line number1 index0 alt2"><code class="php keyword">function</code> <code
+                                class="php plain">edit_admin_menus() {</code></div>
+                            <div class="line number2 index1 alt1"><code
+                                class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="php keyword">global</code> <code class="php variable">$menu</code><code
+                                class="php plain">;</code></div>
+                            <div class="line number3 index2 alt2"><code
+                                class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="php keyword">global</code> <code class="php variable">$submenu</code><code
+                                class="php plain">;</code></div>
+                            <div class="line number4 index3 alt1"><code
+                                class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;</div>
+                            <div class="line number5 index4 alt2"><code
+                                class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="php variable">$menu</code><code class="php plain">[5][0] = </code><code
+                                class="php string">'Recipes'</code><code class="php plain">; </code><code
+                                class="php comments">// Change Posts to Recipes</code></div>
+                            <div class="line number6 index5 alt1"><code
+                                class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="php variable">$submenu</code><code class="php plain">[</code><code
+                                class="php string">'edit.php'</code><code class="php plain">][5][0] = </code><code
+                                class="php string">'All Recipes'</code><code class="php plain">;</code></div>
+                            <div class="line number7 index6 alt2"><code
+                                class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="php variable">$submenu</code><code class="php plain">[</code><code
+                                class="php string">'edit.php'</code><code class="php plain">][10][0] = </code><code
+                                class="php string">'Add a Recipe'</code><code class="php plain">;</code></div>
+                            <div class="line number8 index7 alt1"><code
+                                class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="php variable">$submenu</code><code class="php plain">[</code><code
+                                class="php string">'edit.php'</code><code class="php plain">][15][0] = </code><code
+                                class="php string">'Meal Types'</code><code class="php plain">; </code><code
+                                class="php comments">// Rename categories to meal types</code></div>
+                            <div class="line number9 index8 alt2"><code
+                                class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                                class="php variable">$submenu</code><code class="php plain">[</code><code
+                                class="php string">'edit.php'</code><code class="php plain">][16][0] = </code><code
+                                class="php string">'Ingredients'</code><code class="php plain">; </code><code
+                                class="php comments">// Rename tags to ingredients</code></div>
+                            <div class="line number10 index9 alt1"><code class="php plain">}</code></div>
+                            <div class="line number11 index10 alt2"><code class="php plain">add_action( </code><code
+                                class="php string">'admin_menu'</code><code class="php plain">, </code><code
+                                class="php string">'edit_admin_menus'</code> <code class="php plain">);</code></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+    </div>
+    <p>The posts menu has now been transformed to a recipe menu. This process works for all the menus from the Dashboard
+      to Settings as well as their sub menus.</p>
+    <hr>
+    <h2>Changing the Menu Order</h2>
+    <p>Now I am going to show you how to change the order of the menus, including the separators. I usually prefer Media
+      and Links to be more towards the bottom since I don't use them nearly as much as Pages and Comments.</p>
+    <p>Ordering the admin menu requires using the menu_order filter. However, the menu_order filter requires that you
+      first activate custom_menu_order. So first, you will want to put this code into your <code>functions.php</code>.
+    </p>
+    <div>
+      <div id="highlighter_989753" class="syntaxhighlighter  php">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gutter">
+                <div class="line number1 index0 alt2">01</div>
+                <div class="line number2 index1 alt1">02</div>
+                <div class="line number3 index2 alt2">03</div>
+                <div class="line number4 index3 alt1">04</div>
+                <div class="line number5 index4 alt2">05</div>
+                <div class="line number6 index5 alt1">06</div>
+                <div class="line number7 index6 alt2">07</div>
+                <div class="line number8 index7 alt1">08</div>
+                <div class="line number9 index8 alt2">09</div>
+                <div class="line number10 index9 alt1">10</div>
+                <div class="line number11 index10 alt2">11</div>
+                <div class="line number12 index11 alt1">12</div>
+                <div class="line number13 index12 alt2">13</div>
+                <div class="line number14 index13 alt1">14</div>
+                <div class="line number15 index14 alt2">15</div>
+                <div class="line number16 index15 alt1">16</div>
+                <div class="line number17 index16 alt2">17</div>
+                <div class="line number18 index17 alt1">18</div>
+                <div class="line number19 index18 alt2">19</div>
+                <div class="line number20 index19 alt1">20</div>
+                <div class="line number21 index20 alt2">21</div>
+                <div class="line number22 index21 alt1">22</div>
+              </td>
+              <td class="code">
+                <div class="container">
+                  <div class="line number1 index0 alt2"><code class="php keyword">function</code> <code
+                      class="php plain">custom_menu_order(</code><code class="php variable">$menu_ord</code><code
+                      class="php plain">) {</code></div>
+                  <div class="line number2 index1 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php keyword">if</code> <code class="php plain">(!</code><code
+                      class="php variable">$menu_ord</code><code class="php plain">) </code><code
+                      class="php keyword">return</code> <code class="php plain">true;</code></div>
+                  <div class="line number3 index2 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;
+                  </div>
+                  <div class="line number4 index3 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php keyword">return</code> <code class="php keyword">array</code><code
+                      class="php plain">(</code></div>
+                  <div class="line number5 index4 alt2"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'index.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Dashboard</code></div>
+                  <div class="line number6 index5 alt1"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'separator1'</code><code class="php plain">, </code><code
+                      class="php comments">// First separator</code></div>
+                  <div class="line number7 index6 alt2"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'edit.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Posts</code></div>
+                  <div class="line number8 index7 alt1"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'upload.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Media</code></div>
+                  <div class="line number9 index8 alt2"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'link-manager.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Links</code></div>
+                  <div class="line number10 index9 alt1"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'edit.php?post_type=page'</code><code class="php plain">, </code><code
+                      class="php comments">// Pages</code></div>
+                  <div class="line number11 index10 alt2"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'edit-comments.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Comments</code></div>
+                  <div class="line number12 index11 alt1"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'separator2'</code><code class="php plain">, </code><code
+                      class="php comments">// Second separator</code></div>
+                  <div class="line number13 index12 alt2"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'themes.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Appearance</code></div>
+                  <div class="line number14 index13 alt1"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'plugins.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Plugins</code></div>
+                  <div class="line number15 index14 alt2"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'users.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Users</code></div>
+                  <div class="line number16 index15 alt1"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'tools.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Tools</code></div>
+                  <div class="line number17 index16 alt2"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'options-general.php'</code><code class="php plain">, </code><code
+                      class="php comments">// Settings</code></div>
+                  <div class="line number18 index17 alt1"><code
+                      class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php string">'separator-last'</code><code class="php plain">, </code><code
+                      class="php comments">// Last separator</code></div>
+                  <div class="line number19 index18 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php plain">);</code></div>
+                  <div class="line number20 index19 alt1"><code class="php plain">}</code></div>
+                  <div class="line number21 index20 alt2"><code class="php plain">add_filter(</code><code
+                      class="php string">'custom_menu_order'</code><code class="php plain">, </code><code
+                      class="php string">'custom_menu_order'</code><code class="php plain">); </code><code
+                      class="php comments">// Activate custom_menu_order</code></div>
+                  <div class="line number22 index21 alt1"><code class="php plain">add_filter(</code><code
+                      class="php string">'menu_order'</code><code class="php plain">, </code><code
+                      class="php string">'custom_menu_order'</code><code class="php plain">);</code></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>The order of the menus is top to bottom, so which ever menu you put at the top of the array, will be the first
+      menu. If you do not put one of the standard menu items in the array, it will simply fall to the end of the list,
+      it will not remove it from the menu.</p>
+    <hr>
+    <h2>Removing Menus</h2>
+    <p>You have renamed some menus and you have ordered them how you like. But what if you don't use pages or the link
+      manager at all? You can just remove them.</p>
+    <h3>Removing top level menus</h3>
+    <p>Removing admin menus is very easy to do. WordPress has a built in function just for removing menus:</p>
+    <div>
+      <div id="highlighter_842718" class="syntaxhighlighter  php">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gutter">
+                <div class="line number1 index0 alt2">1</div>
+              </td>
+              <td class="code">
+                <div class="container">
+                  <div class="line number1 index0 alt2"><code class="php plain">remove_menu_page();</code></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>All remove_menu_page needs is the slug of the menu you are removing (also at the end of this tutorial).</p>
+    <p>So, for example, if you wanted to remove the Tools menu, you would use:</p>
+    <div>
+      <div id="highlighter_132709" class="syntaxhighlighter  php">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gutter">
+                <div class="line number1 index0 alt2">1</div>
+              </td>
+              <td class="code">
+                <div class="container">
+                  <div class="line number1 index0 alt2"><code class="php plain">remove_menu_page(</code><code
+                      class="php string">'tools.php'</code><code class="php plain">);</code></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>When removing a menu, you can just reuse the same function you created to rename menus. Here is an example of the
+      function you used at the beginning of this tutorial where you renamed the Posts menu, but now it is also removing
+      the Tools menu as well.</p>
+    <div>
+      <div id="highlighter_867791" class="syntaxhighlighter  php">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gutter">
+                <div class="line number1 index0 alt2">01</div>
+                <div class="line number2 index1 alt1">02</div>
+                <div class="line number3 index2 alt2">03</div>
+                <div class="line number4 index3 alt1">04</div>
+                <div class="line number5 index4 alt2">05</div>
+                <div class="line number6 index5 alt1">06</div>
+                <div class="line number7 index6 alt2">07</div>
+                <div class="line number8 index7 alt1">08</div>
+                <div class="line number9 index8 alt2">09</div>
+                <div class="line number10 index9 alt1">10</div>
+                <div class="line number11 index10 alt2">11</div>
+                <div class="line number12 index11 alt1">12</div>
+                <div class="line number13 index12 alt2">13</div>
+              </td>
+              <td class="code">
+                <div class="container">
+                  <div class="line number1 index0 alt2"><code class="php keyword">function</code> <code
+                      class="php plain">edit_admin_menus() {</code></div>
+                  <div class="line number2 index1 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php keyword">global</code> <code class="php variable">$menu</code><code
+                      class="php plain">;</code></div>
+                  <div class="line number3 index2 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php keyword">global</code> <code class="php variable">$submenu</code><code
+                      class="php plain">;</code></div>
+                  <div class="line number4 index3 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;
+                  </div>
+                  <div class="line number5 index4 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$menu</code><code class="php plain">[5][0] = </code><code
+                      class="php string">'Recipes'</code><code class="php plain">; </code><code
+                      class="php comments">// Change Posts to Recipes</code></div>
+                  <div class="line number6 index5 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$submenu</code><code class="php plain">[</code><code
+                      class="php string">'edit.php'</code><code class="php plain">][5][0] = </code><code
+                      class="php string">'All Recipes'</code><code class="php plain">;</code></div>
+                  <div class="line number7 index6 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$submenu</code><code class="php plain">[</code><code
+                      class="php string">'edit.php'</code><code class="php plain">][10][0] = </code><code
+                      class="php string">'Add a Recipe'</code><code class="php plain">;</code></div>
+                  <div class="line number8 index7 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$submenu</code><code class="php plain">[</code><code
+                      class="php string">'edit.php'</code><code class="php plain">][15][0] = </code><code
+                      class="php string">'Meal Types'</code><code class="php plain">; </code><code
+                      class="php comments">// Rename categories to meal types</code></div>
+                  <div class="line number9 index8 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$submenu</code><code class="php plain">[</code><code
+                      class="php string">'edit.php'</code><code class="php plain">][16][0] = </code><code
+                      class="php string">'Ingredients'</code><code class="php plain">; </code><code
+                      class="php comments">// Rename tags to ingredients</code></div>
+                  <div class="line number10 index9 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;
+                  </div>
+                  <div class="line number11 index10 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php plain">remove_menu_page(</code><code class="php string">'tools.php'</code><code
+                      class="php plain">); </code><code class="php comments">// Remove the Tools Menu</code></div>
+                  <div class="line number12 index11 alt1"><code class="php plain">}</code></div>
+                  <div class="line number13 index12 alt2"><code class="php plain">add_action( </code><code
+                      class="php string">'admin_menu'</code><code class="php plain">, </code><code
+                      class="php string">'edit_admin_menus'</code> <code class="php plain">);</code></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--div class="post__inarticle-ad-template" style="margin-top: 30px;">
+      <div class="ad view">
+        <div class="ad__wrapper">
+          <div class="ad__content" id="div-gpt-1392179526912-0" style="width: 300px; height: 250px;"></div>
+          <div class="ad__label">Advertisement</div>
+        </div>
+      </div>
+    </div-->
+    <h3>Removing a submenu</h3>
+    <p>Removing a submenu is just as easy, it uses a very similar function that removing a top level menu does. Here it
+      is hiding the Theme Editor from the Appearance menu:</p>
+    <div>
+      <div id="highlighter_935505" class="syntaxhighlighter  php">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gutter">
+                <div class="line number1 index0 alt2">1</div>
+              </td>
+              <td class="code">
+                <div class="container">
+                  <div class="line number1 index0 alt2"><code class="php plain">remove_submenu_page(</code><code
+                      class="php string">'themes.php'</code><code class="php plain">,</code><code
+                      class="php string">'theme-editor.php'</code><code class="php plain">);</code></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p>The only difference in the arguments is that you must provide the slug of the submenu's parent, and then the slug
+      for the submenu itself. In a final example, here is the code hiding the entire Tools menu and the Theme Editor
+      submenu:</p>
+    <div>
+      <div id="highlighter_157203" class="syntaxhighlighter  php">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td class="gutter">
+                <div class="line number1 index0 alt2">01</div>
+                <div class="line number2 index1 alt1">02</div>
+                <div class="line number3 index2 alt2">03</div>
+                <div class="line number4 index3 alt1">04</div>
+                <div class="line number5 index4 alt2">05</div>
+                <div class="line number6 index5 alt1">06</div>
+                <div class="line number7 index6 alt2">07</div>
+                <div class="line number8 index7 alt1">08</div>
+                <div class="line number9 index8 alt2">09</div>
+                <div class="line number10 index9 alt1">10</div>
+                <div class="line number11 index10 alt2">11</div>
+                <div class="line number12 index11 alt1">12</div>
+                <div class="line number13 index12 alt2">13</div>
+                <div class="line number14 index13 alt1">14</div>
+              </td>
+              <td class="code">
+                <div class="container">
+                  <div class="line number1 index0 alt2"><code class="php keyword">function</code> <code
+                      class="php plain">edit_admin_menus() {</code></div>
+                  <div class="line number2 index1 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php keyword">global</code> <code class="php variable">$menu</code><code
+                      class="php plain">;</code></div>
+                  <div class="line number3 index2 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php keyword">global</code> <code class="php variable">$submenu</code><code
+                      class="php plain">;</code></div>
+                  <div class="line number4 index3 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;
+                  </div>
+                  <div class="line number5 index4 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$menu</code><code class="php plain">[5][0] = </code><code
+                      class="php string">'Recipes'</code><code class="php plain">; </code><code
+                      class="php comments">// Change Posts to Recipes</code></div>
+                  <div class="line number6 index5 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$submenu</code><code class="php plain">[</code><code
+                      class="php string">'edit.php'</code><code class="php plain">][5][0] = </code><code
+                      class="php string">'All Recipes'</code><code class="php plain">;</code></div>
+                  <div class="line number7 index6 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$submenu</code><code class="php plain">[</code><code
+                      class="php string">'edit.php'</code><code class="php plain">][10][0] = </code><code
+                      class="php string">'Add a Recipe'</code><code class="php plain">;</code></div>
+                  <div class="line number8 index7 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$submenu</code><code class="php plain">[</code><code
+                      class="php string">'edit.php'</code><code class="php plain">][15][0] = </code><code
+                      class="php string">'Meal Types'</code><code class="php plain">; </code><code
+                      class="php comments">// Rename categories to meal types</code></div>
+                  <div class="line number9 index8 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php variable">$submenu</code><code class="php plain">[</code><code
+                      class="php string">'edit.php'</code><code class="php plain">][16][0] = </code><code
+                      class="php string">'Ingredients'</code><code class="php plain">; </code><code
+                      class="php comments">// Rename tags to ingredients</code></div>
+                  <div class="line number10 index9 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code>&nbsp;
+                  </div>
+                  <div class="line number11 index10 alt2"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php plain">remove_menu_page(</code><code class="php string">'tools.php'</code><code
+                      class="php plain">); </code><code class="php comments">// Remove the Tools menu</code></div>
+                  <div class="line number12 index11 alt1"><code class="php spaces">&nbsp;&nbsp;&nbsp;&nbsp;</code><code
+                      class="php plain">remove_submenu_page(</code><code class="php string">'themes.php'</code><code
+                      class="php plain">,</code><code class="php string">'theme-editor.php'</code><code
+                      class="php plain">); </code><code class="php comments">// Remove the Theme Editor submenu</code>
+                  </div>
+                  <div class="line number13 index12 alt2"><code class="php plain">}</code></div>
+                  <div class="line number14 index13 alt1"><code class="php plain">add_action( </code><code
+                      class="php string">'admin_menu'</code><code class="php plain">, </code><code
+                      class="php string">'edit_admin_menus'</code> <code class="php plain">);</code></div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <hr>
+    <h2>In Conclusion</h2>
+    <p>As you can see, doing some basic customization to the backend of WordPress is nice and easy, and even though many
+      might not see what you have done, in the end it can (and will) help you greatly. Organization is never a bad
+      thing. You do it on the front end of your theme, why not do it on the backend too?</p>
+    <p>This is also great if you are running a site for a client. Hiding menus that they could use to cause potential
+      unintended harm to their site is always a huge plus! In future tutorials I will go over more of the customizations
+      that are possible, from using CSS to change the overall look and feel of the backend, to having the customizations
+      only affect certain users.</p>
+    <p>As promised, I have included a chart that will give you all of the menus and submenus name, key, and slug.</p>
+    <div class="tutorial_image"><img
+        src="https://cdn.tutsplus.com/wp/uploads/legacy/228_Customizing_Your_WordPress_Admin/chart.gif"
+        data-original-url="http://wptutsplus.s3.amazonaws.com/228_Customizing_Your_WordPress_Admin/chart.gif"
+        border="0"></div>
+    </div>
+    </div>
+    </div>
+  </article>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-166768780-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-166768780-1');
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Cmus CheatSheet</title>
+<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+<!--link rel="stylesheet" href="https://inner-wise.com/help/css/normalize.css"-->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<style>
+    body {
+        margin: .2rem auto;
+        /*padding: 0 .3rem;*/
+    }
+    h4 {
+        text-align: left;
+        padding: 6px 8px;
+        margin: 0;
+        font-size: 1rem;
+        background-color: #666;
+        }
+        section {
+            /*border: 1px solid white;*/
+            padding: 0;
+            margin: 0;
+        }
+        caption {
+            font-size: small;
+            color: #f5f5f5;
+            padding: .3rem .5rem;
+        }
+</style>
+</head>
+<body>
+<header id="masthead" class="container-fluid">
+<h2>cmus Cheat Sheet by Grunt</h2>
+<h6 class="description">cmus is an ncurses-based music player for Linux</h6>
+</header>
+
+<article class="container-fluid">
+<table class="table table-dark">
+<tr>
+<td width="33%">
+
+<section>
+<h4>Views</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>1</div>
+</td>
+<td>
+<div>Tree list (artis­t/a­lbum)</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>2</div>
+</td>
+<td>
+<div>Track list</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>3</div>
+</td>
+<td>
+<div>Playlist</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>4</div>
+</td>
+<td>
+<div>Play Queue</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>5</div>
+</td>
+<td>
+<div>File browser</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>6</div>
+</td>
+<td>
+<div>Library filters</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>7</div>
+</td>
+<td>
+<div>Settings</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4>Controls</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <caption>
+If I'm moving between the tree or
+sorted list to the playlist or play queue, I use b to switch to the
+next track, then x to play that track, and then the playlist or
+play queue will start.
+</caption>
+<tbody>
+<tr>
+<td>
+<div>x</div>
+</td>
+<td>
+<div>Play track</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>v</div>
+</td>
+<td>
+<div>Stop</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>c</div>
+</td>
+<td>
+<div>Pause</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>b</div>
+</td>
+<td>
+<div>Next track</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>z</div>
+</td>
+<td>
+<div>Previous track</div>
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</section>
+<section>
+
+<h4>Library mainte­nance</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>:add dir/file</div>
+</td>
+<td>
+<div>Add files to library</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:clear -l</div>
+</td>
+<td>
+<div>Empty the library</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:updat­e-cache</div>
+</td>
+<td>
+<div>Update the library</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4>Exit</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>:quit</div>
+</td>
+<td>
+<div>Leave</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:quit -i</div>
+</td>
+<td>
+<div>Ask before leaving</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>q</div>
+</td>
+<td>
+<div>Same as :quit -i</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+</td>
+<!--td> &nbsp; </td-->
+
+<td width="33%">
+
+<section>
+<h4>Tree Library / Track Library</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>1</div>
+</td>
+<td>
+<div>Switch to tree library</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>2</div>
+</td>
+<td>
+<div>Switch to track library</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>/exp</div>
+</td>
+<td>
+<div>Search for exp</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>n</div>
+</td>
+<td>
+<div>Search forwards</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>N</div>
+</td>
+<td>
+<div>Search backwards</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4>Playlist</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>3</div>
+</td>
+<td>
+<div>Switch to playlist</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:clear -p</div>
+</td>
+<td>
+<div>Clear the current playlist</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:load -p name</div>
+</td>
+<td>
+<div>Load a playlist</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:save -p name</div>
+</td>
+<td>
+<div>Save the current playlist</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>y</div>
+</td>
+<td>
+<div>Add track to playlist</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4>Play Queue</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>4</div>
+</td>
+<td>
+<div>Switch to play queue</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:tqueue nn</div>
+</td>
+<td>
+<div>Add nn tracks to queue</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:lqueue nn</div>
+</td>
+<td>
+<div>Add nn albums to queue</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:clear -q</div>
+</td>
+<td>
+<div>Clear play queue</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>e</div>
+</td>
+<td>
+<div>Append track to queue</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>E</div>
+</td>
+<td>
+<div>Prepend track to queue</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4> Filters</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>6</div>
+</td>
+<td>
+<div>Switch to filters</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:factivate name</div>
+</td>
+<td>
+<div>Apply filter</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:fset name=exp</div>
+</td>
+<td>
+<div>Create filter</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>:filter exp</div>
+</td>
+<td>
+<div>Use filter without save</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</td>
+
+<!--td> &nbsp; </td-->
+
+<td width="33%">
+
+<section>
+<h4>In View</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>p</div>
+</td>
+<td>
+<div>Move track up</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>P</div>
+</td>
+<td>
+<div>move track down</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>D</div>
+</td>
+<td>
+<div>delete track</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>g</div>
+</td>
+<td>
+<div>Top of list</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>G</div>
+</td>
+<td>
+<div>Bottom of list</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4>Play Modes</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+    <tbody>
+<tr>
+<td>
+<div>C</div>
+</td>
+<td>
+<div>Toggle continue</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>m</div>
+</td>
+<td>
+<div>Toggle all/ar­tis­t/album</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>M</div>
+</td>
+<td>
+<div>Toggle librar­y/p­laylist</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>o</div>
+</td>
+<td>
+<div>Toggle
+librar­y/s­ort­ed-­library</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>r</div>
+</td>
+<td>
+<div>Toggle repeat</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>^R</div>
+</td>
+<td>
+<div>Toggle repeat current</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>s</div>
+</td>
+<td>
+<div>Toggle shuffle</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>t</div>
+</td>
+<td>
+<div>Toggle remaining time</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section>
+<h4>Sorting</h4>
+<div class="table-responsive-sm">
+<table class="table table-sm table-light">
+<caption>
+    I like to view the music in several
+specific ways. Normally, by artist and album. Sometimes, by album
+(looking for those big compil­ation sets). Switch to view 2, then
+enter these lib_sort commands.
+</caption>
+<tbody>
+<tr>
+<td>
+<div>Artist</div>
+</td>
+<td>
+<div>:set lib_sort albuma­rtist date
+album discnumber trackn­umber</div>
+</td>
+</tr>
+<tr>
+<td>
+<div>Album</div>
+</td>
+<td>
+<div>:set lib_sort album discnumber
+trackn­umber</div>
+</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</section>
+</td>
+</tr>
+
+</table>
+<div id="tag_list">
+    <span><a href="/tag/music/" rel="tag">music</a></span>    
+    <span> <a href="/tag/player/" rel="tag">player</a></span>    
+<span> <a href="/tag/cmus/" rel="tag">cmus</a></span>
+</div>
+</article>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166768780-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166768780-1');
+</script>
+
+</body>
+</html>

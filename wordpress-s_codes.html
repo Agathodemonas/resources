@@ -1,0 +1,306 @@
+<html lang="en">
+  <head>
+    <title>Wordpress Code Snippets + Shortcodes</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Spinnaker" rel="stylesheet">
+    <link rel="stylesheet" href="https://inner-wise.com/help/css/normalize.css">
+    <!-- <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script> -->
+<style>
+body {
+  background-color: #F6F7EB;
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1 {
+  font-family: 'Lobster Two', cursive;
+  text-align: center;
+  margin-top: 30px;
+  font-size: 50px;
+  color: #2b3a40;
+}
+
+h3 {
+  text-align: center;
+  margin-top: 30px;
+  font-family: 'Spinnaker', sans-serif;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+article {
+  width:80%;
+  margin:0 auto;
+}
+span {
+  font-size: small;
+}
+/* Style the element that is used to open and close the accordion class */
+p.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    margin-bottom:10px;
+}
+
+/* Add a background color to the accordion if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+p.accordion.active, p.accordion:hover {
+    background-color: #ddd;
+}
+
+/* Unicode character for "plus" sign (+) */
+p.accordion:after {
+    content: '\2795';
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+
+/* Unicode character for "minus" sign (-) */
+p.accordion.active:after {
+    content: "\2796";
+}
+
+/* Style the element that is used for the panel class */
+
+div.panel {
+    padding: 0 15px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.4s ease-in-out;
+    opacity: 0;
+    margin: 0;
+    margin-bottom:10px;
+    width: 100%;
+}
+
+div.panel.show {
+    opacity: 1;
+    max-height: 500px; /* Whatever you like, as long as its more than the height of the content (on all screen sizes) */
+}
+textarea {
+  font-family: monospace;
+  font-size: .9rem;
+  box-sizing: border-box;
+  resize: none;
+  width:100%;
+  background-color: #fbfbfb;
+  border:1px solid #dedede;
+  padding:10px;
+  line-height: 1.5;
+  margin: 15px 0;
+}
+
+textarea:focus {
+  outline: none;
+}
+ </style>
+  </head>
+
+  <body onload="addAutoResize()">
+    <h1>Wordpress Snippets + Shortcodes</h1>
+
+ <h3>Shortcodes</h3>
+<article>
+<p class="accordion">Shortcode to Display External Files</p>
+<div class="panel">
+  <textarea data-autoresize readonly="1" rows="2">
+function show_file_func( $atts ) {
+  extract( shortcode_atts( array(
+    'file' => ''
+  ), $atts ) );
+
+  if ($file!='')
+    return @file_get_contents($file);
+}
+
+add_shortcode( 'show_file', 'show_file_func' );
+</textarea>
+  <span>shortcode example:</span>
+  <textarea data-autoresize readonly="1" rows="2">
+     [show_file file="https://example.com/somefile-url/"]
+</textarea>
+</div>
+</article>
+
+<h3>Code Snippets</h3>
+<article>
+<p class="accordion">Remove WordPress Meta-Boxes from Posts & Pages Editor Screens</p>
+<div class="panel">
+  <textarea data-autoresize readonly="1" rows="2">
+function remove_extra_meta_boxes() {
+remove_meta_box( 'postcustom' , 'post' , 'normal' ); // custom fields for posts
+remove_meta_box( 'postcustom' , 'page' , 'normal' ); // custom fields for pages
+remove_meta_box( 'postexcerpt' , 'post' , 'normal' ); // post excerpts
+remove_meta_box( 'postexcerpt' , 'page' , 'normal' ); // page excerpts
+remove_meta_box( 'commentsdiv' , 'post' , 'normal' ); // recent comments for posts
+remove_meta_box( 'commentsdiv' , 'page' , 'normal' ); // recent comments for pages
+remove_meta_box( 'tagsdiv-post_tag' , 'post' , 'side' ); // post tags
+remove_meta_box( 'tagsdiv-post_tag' , 'page' , 'side' ); // page tags
+remove_meta_box( 'trackbacksdiv' , 'post' , 'normal' ); // post trackbacks
+remove_meta_box( 'trackbacksdiv' , 'page' , 'normal' ); // page trackbacks
+remove_meta_box( 'commentstatusdiv' , 'post' , 'normal' ); // allow comments for posts
+remove_meta_box( 'commentstatusdiv' , 'page' , 'normal' ); // allow comments for pages
+remove_meta_box('slugdiv','post','normal'); // post slug
+remove_meta_box('slugdiv','page','normal'); // page slug
+remove_meta_box('pageparentdiv','page','side'); // Page Parent
+}
+add_action( 'admin_menu' , 'remove_extra_meta_boxes' );
+  </textarea>
+</div>
+
+<p class="accordion">Removing Default Widgets from the WordPress Dashboard</p>
+<div class="panel">
+<textarea data-autoresize readonly="1" rows="2">
+// Create the function to use in the action hook
+function example_remove_dashboard_widgets() {
+  // Globalize the metaboxes array, this holds all the widgets for wp-admin
+
+  global $wp_meta_boxes;
+
+  // Remove the incomming links widget
+  unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']);
+
+  // Remove right now
+  unset($wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']);
+  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']);
+  unset($wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']);
+}
+
+// Hoook into the 'wp_dashboard_setup' action to register our function
+add_action('wp_dashboard_setup', 'example_remove_dashboard_widgets' );
+</textarea>
+</div>
+
+<p class="accordion">Remove Author Metabox/Options & Move to Publish MetaBox</p>
+<div class="panel">
+  <textarea data-autoresize readonly="1" rows="2">
+// MOVE THE AUTHOR METABOX INTO THE PUBLISH METABOX
+add_action( 'admin_menu', 'remove_author_metabox' );
+add_action( 'post_submitbox_misc_actions', 'move_author_to_publish_metabox' );
+function remove_author_metabox() {
+    remove_meta_box( 'authordiv', 'post', 'normal' );
+}
+function move_author_to_publish_metabox() {
+    global $post_ID;
+    $post = get_post( $post_ID );
+    echo '<div id="author" class="misc-pub-section" style="border-top-style:solid; border-top-width:1px; border-top-color:#EEEEEE; border-bottom-width:0px;">Author: ';
+    post_author_meta_box( $post );
+    echo '</div>';
+}
+  </textarea>
+</div>
+
+<p class="accordion">Show an Urgent Message in the WordPress Admin</p>
+<div class="panel">
+  <textarea data-autoresize readonly="1" rows="2">
+function showMessage($message, $errormsg = false)
+{
+  if ($errormsg) {
+    echo '<div id="message" class="error">';
+  }
+  else {
+    echo '<div id="message" class="updated fade">';
+  }
+
+  echo "<p><strong>$message</strong></p></div>";
+}
+  </textarea>
+  <span>Next, add a hook to the admin notices function to show your custom message:</span>
+  <textarea data-autoresize readonly="1" rows="2">
+function showAdminMessages()
+{
+    // Only show to admins
+    if (user_can('manage_options') {
+       showMessage("Hello admins!");
+    }
+}
+
+add_action('admin_notices', 'showAdminMessages');
+  </textarea>
+</div>
+
+<p class="accordion">Adding a Custom WordPress Dashboard Logo</p>
+<div class="panel">
+  <textarea data-autoresize readonly="1" rows="2">
+//hook the administrative header output
+add_action('admin_head', 'my_custom_logo');
+
+function my_custom_logo() {
+echo '
+<style type="text/css">
+#header-logo { background-image: url('.get_bloginfo('template_directory').'/images/custom-logo.gif) !important; }
+</style>
+';
+}
+  </textarea>
+</div>
+
+</article>
+
+<script>
+// this one toggles only one open at a time
+// Ref  - http://stackoverflow.com/questions/37745154/only-open-one-accordion-tab-at-one-time
+document.addEventListener("DOMContentLoaded", function(event) {
+var acc = document.getElementsByClassName("accordion");
+var panel = document.getElementsByClassName('panel');
+
+for (var i = 0; i < acc.length; i++) {
+    acc[i].onclick = function() {
+        var setClasses = !this.classList.contains('active');
+        setClass(acc, 'active', 'remove');
+        setClass(panel, 'show', 'remove');
+
+        if (setClasses) {
+            this.classList.toggle("active");
+            this.nextElementSibling.classList.toggle("show");
+        }
+    }
+}
+
+function setClass(els, className, fnName) {
+    for (var i = 0; i < els.length; i++) {
+        els[i].classList[fnName](className);
+    }
+}
+
+});
+
+// function autoGrow(oField) {
+//   if (oField.scrollHeight > oField.clientHeight) {
+//     oField.style.height = oField.scrollHeight + "px";
+//   }
+// }
+
+function addAutoResize() {
+  document.querySelectorAll('[data-autoresize]').forEach(function (element) {
+    element.style.boxSizing = 'border-box';
+    element.style.overflow = 'hidden';
+     if (element.scrollHeight > element.clientHeight) {
+       element.style.height = element.scrollHeight + "px";
+     }
+  });
+}
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166768780-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166768780-1');
+</script>
+
+  </body>
+</html>

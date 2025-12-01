@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en-US" class="no-js no-svg">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="profile" href="https://gmpg.org/xfn/11">
+<title>WordPress Internals: Loading Sequence</title>
+<link rel="stylesheet" href="https://inner-wise.com/help/css/normalize.css">
+<style>
+    a {
+        box-shadow: inset 0 -1px 0 currentColor;
+        text-decoration: none;
+        transition: color 80ms ease-in, box-shadow 130ms ease-in-out, -webkit-box-shadow 130ms ease-in-out;
+        background-color: transparent;
+        color: #000;
+    }
+article{
+    width: 96%;
+    margin: 0 auto;
+    padding-top: 2em;
+    }
+header {
+    text-align: center;
+    }
+    .content {
+        width: 80%;
+        margin: 0 auto;
+    }
+    .content ol li {
+    margin: 0 0 5px 20px;
+    }
+    code {
+    font-size: 15px;
+    font-size: 0.9375rem;
+    padding: 3px 10px;
+    position: relative;
+    top: -1px;
+    border-radius: 3px;
+    background-color: #f1f1f1;
+    }
+    code, kbd, tt, var, samp, pre {
+    font-family: Menlo, Consolas, monaco, monospace;
+}
+</style>
+</head>
+
+<body>
+<article>
+<div>
+<header>
+    <h1>WordPress Internals: Loading Sequence</h1>
+    <div><a href="https://www.mikeinmonospace.com/wordpress-internals-loading-sequence/" target="_blank"> <span>Updated</span> <time>March 5, 2020</time></span>
+<span> by Mike </span></a></div>
+</header>
+<div class="content">
+    <p><strong>Whenever I start learning something new I prefer to have a deep understanding of the process that goes on behind the scene of whatever I’m trying to learn. </strong></p>
+    <p>From experience, I can tell you that this can be both good and bad, because you can often get stuck and feel like you’re never gonna get it. Ultimately, a deeper understanding is a good thing. It just takes a few tries before you get there
+        🙂</p>
+    <p>When I first made contact with WordPress, I was modifying existing themes or doing front-end customization through plugins.</p>
+    <p>The more I worked with WordPress and the more of an advanced user I became, the more I felt like I was missing something. That something was the deeper understanding of the process that WordPress goes through to show content to the end
+        user.</p>
+    <p><strong>So, here it is.</strong></p>
+    <span></span>
+    <h2>The WordPress Loading Sequence</h2>
+    <p>These are the steps that WordPress goes through from when you type an <a>URL</a> into the browser and until it presents you with whatever content you requested. Unfortunately, as it goes through these steps for every single page view,
+        sometimes it can be a little slow.</p>
+    <p>First, we’ll take a look at a top level view of the process, after that we’ll get into an extended view and we’ll finish off with an almost complete loading sequence. At the end you’ll also find a chart of the entire process.</p>
+    <h2>WordPress Loading Sequence: Basic</h2>
+    <ol>
+        <li>Create <a>base configuration</a> for WordPress</li>
+        <li>Set up version variables</li>
+        <li>Set initial default constants</li>
+        <li>Check if maintenance mode is enabled</li>
+        <li>Check if debug mode is enabled</li>
+        <li>Load early functionality files</li>
+        <li>Load the database class file and instantiate the global variable</li>
+        <li>Set up the default filters and actions for most of the WordPress hooks</li>
+        <li>Initialize multi-site if enabled</li>
+        <li>Load the localization library</li>
+        <li>Load most of the remaining WordPress functionality</li>
+        <li>Load must-use plugins</li>
+        <li>Load multi-site plugins</li>
+        <li>Create initial taxonomies and post types</li>
+        <li>Load normal plugins</li>
+        <li>Load pluggable functions</li>
+        <li>Instantiate global query, rewrite and widget objects</li>
+        <li>Load the active theme</li>
+        <li>Set up the current user</li>
+        <li>Build the query to get the requested data</li>
+        <li>Select the correct template from the <a href="https://developer.wordpress.org/themes/basics/template-hierarchy/" target="_blank">hierarchy</a></li>
+        <li>The result of the request is sent to the browser</li>
+    </ol>
+    <h2>WordPress Loading Sequence: Extended</h2>
+    <p>As with most PHP applications, the loading sequence starts with a <strong><code>index.php</code></strong> file and so is the case with WordPress.</p>
+    <ol>
+        <li>It all starts in the WordPress installation root folder with <a><strong><code>/index.php</code></strong></a></li>
+        <li>Set up MySQL settings</li>
+        <li>Set up authentication data</li>
+        <li>Set up database table prefix</li>
+        <li>Set up debugging mode</li>
+        <li>Load functions needed to load WordPress</li>
+        <li>Load constants and global variables file that can be overridden, generally in <strong><code>/wp-config.php</code></strong> which was loaded earlier in <code><strong>/index.php</strong></code></li>
+        <li>Load the Plugin API</li>
+        <li>Set up version variables</li>
+        <li>Set up initial default constants</li>
+        <li>Check if maintenance mode is enabled</li>
+        <li>Check if debug mode is enabled</li>
+        <li>Set up advanced caching functionality</li>
+        <li>Load early core utility and class files</li>
+        <li>Load the database class file and instantiate the <strong><code>$wpdb</code></strong> global variable</li>
+        <li>Connect to MySQL and select database</li>
+        <li>Start the object cache</li>
+        <li>Set up the default filters and actions for most of the WordPress hooks</li>
+        <li>Initialize multi-site if enabled</li>
+        <li>Check if only the basics are needed and stop most of WordPress from being loaded</li>
+        <li>Load the localization library</li>
+        <li>Do a final check to see if the site needs to be installed</li>
+        <li>Load most of the remaining WordPress functionality</li>
+        <li>Load multi-site specific files</li>
+        <li>Load must-use plugins</li>
+        <li>Load network activated plugins</li>
+        <li><strong><code><a>do_action( 'muplugins_loaded' )</a></code></strong></li>
+        <li>Create initial taxonomies and post types</li>
+        <li>Set up the default theme directory root</li>
+        <li>Load normal plugins</li>
+        <li>Load pluggable functions which you can easily overwrite from your themes or plugins</li>
+        <li><strong><code><a>do_action( 'plugins_loaded' )</a></code></strong></li>
+        <li>Instantiate global objects <strong><code>WP_Query</code>, <code>WP_Rewrite</code>, <code>WP</code></strong> and <strong><code>WP_Widget_Factory</code></strong></li>
+        <li><a><code><strong>do_action( 'setup_theme' )</strong></code></a> fires before the active theme is loaded</li>
+        <li>Load the default text localization domain</li>
+        <li>Load the <strong><code>functions.php</code></strong> file for the active theme</li>
+        <li><a><strong><code>do_action( 'after_setup_theme' )</code></strong></a> fires after the theme is loaded</li>
+        <li>Set up the current user</li>
+        <li><a><strong><code>do_action( 'init' )</code></strong></a>. Many themes and plugins use this hook as it is safe for running code</li>
+        <li><code><strong><a>do_action( 'widgets_init' )</a></strong></code></li>
+        <li><code><strong><a>do_action( 'wp_loaded' )</a></strong></code></li>
+        <li>Run <strong><code>wp()</code></strong> to get the requested data</li>
+        <li><code><strong><a>do_action( 'template_redirect' )</a></strong></code> fires before determining which template to load</li>
+        <li>Select the correct template from the hierarchy</li>
+        <li><a><code><strong>apply_filters( 'template_include' )</strong></code></a></li>
+        <li><code><strong><a>do_action( 'shutdown' )</a></strong></code></li>
+        <li>The result of the request is sent to the browser</li>
+    </ol>
+    <h2>WordPress Loading Sequence: Detailed</h2>
+    <p>Whenever you type an address in the browser bar you make a request to a web hosting server. From there, the loading sequence of WordPress starts with the <strong><code>/index.php</code></strong> file in the root installation folder. Here
+        is a detailed account of what is going on in the WordPress boot process.</p>
+    <h3>1. A request is made</h3>
+    <p>When you type in an address, the HTTP client, your browser, sends an HTTP request to a web server in the form of a request message.</p>
+    <h3>2. <a><code>/index.php</code></a></h3>
+    <p>WordPress starts the loading sequence with this file. Two things are happening here:</p>
+    <ol>
+        <li><code><strong>WP_USE_THEMES</strong></code> is defined which tells WordPress to load the active theme. If you are do not need to display the content stored in WordPress you can set this constant to <strong><code>false</code></strong>.
+            Additionally you can display the WordPress content on a page from an existing website. To do this, use the following code on the page where you want to integrate WordPress:<br/><strong><code>&lt;?php define(<span>'WP_USE_THEMES'</span>, <span>false</span>); require(<span>'./wp-blog-header.php'</span>); ?&gt;</code></strong></li>
+        <li>Require <strong><code>/wp-blog-header.php</code></strong> which loads the WordPress environment</li>
+    </ol>
+    <p>If you are requesting an admin page the process starts with the <strong><code>/wp-admin/index.php</code></strong> file.</p>
+    <h3>3. <a><code>/wp-blog-header.php</code></a></h3>
+    <p>There are three things happening here:</p>
+    <ol>
+        <li>Checks if initial HTTP headers have been sent via the <strong><code>$wp_did_header</code> </strong>variable. This is done so that the functionality in this file is executed only once</li>
+        <li>Require <strong><code>/wp-load.php</code></strong> which sets up the entire WordPress environment</li>
+        <li>Execute <strong><code>wp()</code></strong> function from <strong><code>/wp-includes/functions.php</code></strong> file, which sets up and runs the WordPress query to get the requested data</li>
+        <li>Require <strong><code>/wp-includes/template-loader.php</code></strong> which loads the correct template from the hierarchy, based on the requested URL</li>
+    </ol>
+    <h3>4. <a><code>/wp-load.php</code></a></h3>
+    <p>This is a bootstrap file which contains two main pieces of functionality:</p>
+    <ol>
+        <li>Define the <strong><code>ABSPATH</code></strong> constant as this file’s directory. This is the root directory of the WordPress installation</li>
+        <li>Require <strong><code>/wp-config.php</code></strong> which contains the base configuration for the WordPress environment. If it doesn’t find such a file, the WordPress installation process will start.</li>
+    </ol>
+    <h3>5. <a><code>/wp-config.php</code></a></h3>
+    <p>This is what happens in this file:</p>
+    <ol>
+        <li>Set up MySQL settings</li>
+        <li>Set up authentication data. This is done though a few constants which you can change at any point in time to invalidate all existing cookies. This will force all users to have to log in again</li>
+        <li>Set up database <strong><code>$table_prefix</code></strong></li>
+        <li>Set up WordPress debugging mode by defining the <strong><code>WP_DEBUG</code></strong> constant. Defaults to <strong><code>false</code></strong>. You can set this to <strong><code>true</code></strong> to show PHP errors</li>
+        <li>Require <strong><code>/wp-settings.php</code></strong> which sets up WordPress variables and includes other files</li>
+    </ol>
+    <p>At this point, WordPress has all the information it needs to securely access the database and load the requested data.</p>
+    <h3>6. <a><code>/wp-settings.php</code></a></h3>
+    <p>This is the most important file in the loading sequence as it sets up most of the WordPress functionality and includes other needed files. Here is what’s going on and the most important steps:</p>
+    <ol>
+        <li>Define the <strong><code>WP_INC</code></strong> constant which stores the location of the WordPress directory of functions, classes and core content. This points to <strong><code>/wp-includes</code></strong> in the root folder</li>
+        <li>Require <strong><code>/wp-includes/load.php</code></strong> which contains functions used for further initialization and loading WordPress. The functions in this file will be used further down.</li>
+        <li>Require <strong><code>/wp-includes/default-constants.php</code></strong> which defines constants and global vars that can be overridden in <strong><code>/wp-config.php</code></strong></li>
+        <li>Require <strong><code>/wp-includes/plugin.php</code></strong> which loads the Plugin API. The functionality from installed plugins is not yet available.</li>
+        <li>Set up version variables: <strong><code>$wp_version</code>, <code>$wp_db_version</code>, <code>$tinymce_version</code>, <code>$required_php_version</code>, <code>$required_mysql_version</code>, <code>$wp_local_package</code></strong></li>
+        <li>Set up <strong><code>$blog_id</code></strong> global variable which defaults to <strong><code>1</code></strong> in single site configuration. In multi-site, it will be overridden by default in <strong><code>/wp-includes/ms-settings.php</code></strong></li>
+        <li>Set initial default constants: <strong><code>WP_MEMORY_LIMIT</code>, <code>WP_MAX_MEMORY_LIMIT</code>, <code>WP_DEBUG</code>, <code>SCRIPT_DEBUG</code>, <code>WP_CONTENT_DIR</code></strong> and <strong><code>WP_CACHE</code></strong></li>
+        <li>Check if maintenance mode is enabled. This is true if there is a file <strong><code>.maintenance</code> </strong>in the root<strong> </strong>folder or if the WordPress installation mode is active</li>
+        <li>Check if <strong><code>WP_DEBUG</code></strong> mode is enabled</li>
+        <li>Set up advanced caching functionality</li>
+        <li>Define the <strong><code>WP_LANG_DIR</code></strong> constant which sets up the location of the language directory</li>
+        <li>Require <strong><code>/wp-includes/compat.php</code></strong> file adds functions  missing from older PHP versions</li>
+        <li>Require <strong><code>/wp-includes/wp-class-list-util.php</code></strong> file which contains a utility class to handle operations on an array of objects</li>
+        <li>Require <strong><code>/wp-includes/functions.php</code></strong> file which contains the main WordPress API and the most important functionality to run a website</li>
+        <li>Require <strong><code>/wp-includes/class-wp-matchesmapregex.php</code></strong> file which contains a helper class related to string operations</li>
+        <li>Require <strong><code>/wp-includes/class-wp.php</code></strong> file which contains the object for building the WordPress query. This object is instantiated further down</li>
+        <li>Require <strong><code>/wp-includes/class-wp-error.php</code></strong> file which contains a class for handling errors in WordPress</li>
+        <li>Require <strong><code>/wp-includes/pomo/mo.php</code></strong> file which contains a class for working with translation files</li>
+        <li>Set up <strong><code>$wpdb</code></strong> global variable and load the database class file and object cache. This functionality provides database connections and caching. It also allows the use of drop-ins which can be used to substitute
+            the default classes and functionality here.</li>
+        <li>Require <strong><code>/wp-includes/default-filters</code></strong><span><strong><code>.php</code></strong> file which sets up default actions and filters for most of the WordPress hooks</span></li>
+        <li>Initialize multi-site if enabled. The multi site functionality can be changed by loading a <strong><code>/wp-content/sunrise.php</code></strong> drop-in file</li>
+        <li>End the loading of basic functionality</li>
+        <li>Check if only basic WordPress functionality is needed by checking the <strong><code>SHORTINIT</code></strong> constant. This constant can be used in themes and plugins to only load the very basics of WordPress.</li>
+        <li>Load the Translation API</li>
+        <li>Do a final check to see if the site needs to be installed</li>
+        <li>Load most of the remaining WordPress functionality by requiring some more files</li>
+        <li>Require multi-site specific files</li>
+        <li>Define plugin directory WordPress constant: <strong><code>WP_CONTENT_URL</code>, <code>WP_PLUGIN_DIR</code>, <code>WP_PLUGIN_URL</code>, <code>PLUGINDIR</code>, <code>WPMU_PLUGIN_DIR</code>, <code>WPMU_PLUGIN_URL</code>, <code>MUPLUGINDIR</code></strong></li>
+        <li>Load must-use plugins</li>
+        <li>Load network activated plugins</li>
+        <li><code><strong>do_action( 'muplugins_loaded' )</strong></code> This is the earliest hook you can use. There are no normal plugins loaded at this point</li>
+        <li>Require <strong><code>/wp-includes/vars.php</code></strong> file which creates common global vars for the rest of WordPress</li>
+        <li>Create initial post types and taxonomies</li>
+        <li>Load normal plugins</li>
+        <li>Require <strong><code>/wp-includes/pluggable.php</code></strong> which loads functions that can be replaced via plugins or themes</li>
+        <li><strong><code>do_action( 'plugins_loaded' )</code></strong></li>
+        <li>Define constants that affect functionality: <strong><code>AUTOSAVE_INTERVAL</code>, <code>EMPTY_TRASH_DAYS</code>, <code>WP_POST_REVISIONS</code>, <code>WP_CRON_LOCK_TIMEOUT</code></strong></li>
+        <li>Instantiate the global objects <strong><code>WP_Query</code>, <code>WP_Rewrite</code>, <code>WP</code></strong> and <strong><code>WP_Widget_Factory</code></strong> which were loaded earlier</li>
+        <li><code><strong>do_action( 'setup_theme' )</strong></code> fires before the active theme is loaded</li>
+        <li>Define the template related constants: <strong><code>TEMPLATEPATH</code>, <code>STYLESHEETPATH</code>, <code>WP_DEFAULT_THEME</code></strong></li>
+        <li>Load default translated strings based on locale</li>
+        <li>Load the functions for the active theme, for both parent and child theme if applicable. This is done by checking if <strong><code>functions.php</code></strong> file exists in <strong><code>STYLESHEETPATH</code></strong> and <strong><code>TEMPLATEPATH</code></strong> which
+            were defined earlier in the <strong><code>wp_templating_constants()</code></strong> function from <strong><code>/wp-includes/default-constants.php</code></strong></li>
+        <li><strong><code>do_action( 'after_setup_theme' )</code></strong> fires after the theme is loaded</li>
+        <li>set up the current user</li>
+        <li><strong><code>do_action( 'init' )</code></strong> fires after WordPress has finished loading but before any headers are sent. Most of WP is loaded at this stage, and the user is authenticated. This hook can be safely used for running
+            code. Plugins use this hook to instantiate themselves for reasons like user, taxonomy and post type availability</li>
+        <li><code><strong>do_action( 'wp_loaded' )</strong></code> fires once WP, all plugins, and the theme are fully loaded and instantiated.</li>
+    </ol>
+    <p>This is the end of the <strong><code>/wp-settings.php</code></strong> file and we continue in the <strong><code>/wp-blog-header.php</code></strong> file.</p>
+    <h3>7. <code>wp()</code></h3>
+    <p>This function is located in the <a><strong><code>/wp-includes/functions.php</code></strong></a> file which was loaded earlier in the <strong><code>/wp-settings.php</code></strong> file as part of the early WordPress files. This function
+        sets up the WordPress query by checking the requested URL in order to get the requested data.</p>
+    <h3>8. <a><code>/wp-includes/template-loader.php</code></a></h3>
+    <p>WordPress has arrived at the final part of its loading process. All of the WordPress functions are available through the <strong><code>/wp-settings.php</code></strong> file and the requested data is loaded by the <strong><code>wp()</code></strong>                    function. It’s time to load the correct template from the WordPress template hierarchy. This is what’s going on:</p>
+    <ol>
+        <li><code><strong>do_action( 'template_redirect' )</strong></code> fires before determining which template to load. This hook can be used to load an alternative template if the loaded data doesn’t need the default one</li>
+        <li>Check if the current request is a header request and if so, exit before the page content loads. This provides a significant performance bump.</li>
+        <li>Check for 3 special kinds of requests: robots, feeds, trackbacks. If these are detected, a template file does not need to be loaded</li>
+        <li>Go through a list of checks and determine the template file to be loaded. If the file exists it is stored in the <strong><code>$template</code></strong> variable, else the default index template is stored</li>
+        <li>Filter the <strong><code>$template</code></strong> variable before including the template file</li>
+    </ol>
+    <h3>9. <a><code>do_action( 'shutdown' )</code></a></h3>
+    <p>This is the last action that is being fired, just before ending all PHP execution. WordPress has run all the code needed to build the requested page and it stops working at this point.</p>
+    <h3>10. The result of the request is sent to the browser</h3>
+    <p>At this point, the web hosting server replies to the HTTP client request by sending it the web page generated by WordPress and comprised of HTML, CSS and JavaScript code which tells the browser how to display the page.</p>
+    <p><strong>There it is. The WordPress boot process in three flavors: basic, extended and detailed. I’ve also made a chart of the whole process which you can see below.</strong></p>
+    <p>Please comment with your thoughts, things I may have missed or steps that you think are important and I have overlooked.</p>
+    <figure>
+        <img src="https://www.mikeinmonospace.com/wp-content/uploads/2018/03/wordpress-loading-sequence-chart.gif" />
+    </figure>
+</div>
+<footer>
+
+
+</footer>
+</div>
+
+</article>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166768780-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166768780-1');
+</script>
+
+
+</body>
+
+</html>

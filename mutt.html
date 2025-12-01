@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<title>Mutt Quick Reference Chart</title>
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+      table tbody td {
+        vertical-align: middle;
+      }
+      table tbody tr td:first-child {
+   background:#efefef;
+   text-align: center;
+   font-weight: 700;
+   white-space: nowrap;
+}
+    </style>
+</head>
+<body>
+  <div class="container">
+<a name="ToC"><h1 align=center>The Mutt Cheat Sheet</h1></a>
+<h4>This is a chart of common Mutt commands, the context(s) in which you
+could use them, what they do, the section(s) of the tutorial that explain
+them, and which .muttrc settings affect them.</h4>
+<p  class="lead">Note: some commands may appear more than once if their effects differ
+depending on context.</p>
+<div class="table-responsive">
+<table class="table table-bordered align-middle">
+  <thead class="bg-light">
+<th scope="col">Mutt Cmd</th>
+<th scope="col">Context</th>
+<th scope="col">Effect</th>
+<th scope="col">Tutorial Section</th>
+<th scope="col"><a href="http://www.ucolick.org/~lharden/learnmutt.html#Muttrc">Relevant .muttrc settings</th>
+<tr>
+</thead>
+<tbody>
+<td><kbd>a</kbd></td>
+<td>Sending Message</td>
+<td>Attaches a file to the message you have created</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Send">Sending Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>b</td>
+<td>Sending Message</td>
+<td>Lets you edit the list of blind carbon copy recipients for the message
+you have created</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Send">Sending Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>c</td>
+<td>Sending Message</td>
+<td>Lets you edit the list of carbon copy recipients for the message you
+have created</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Send">Sending Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>d</td>
+<td>Main Menu, Reading Message</td>
+<td>Marks the current message for deletion</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Delete">Deleting Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>f</td>
+<td>Main Menu, Reading Message</td>
+<td>Forwards the message to another address</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Forward">Forwarding Messages</a></td>
+<td>askbcc, askcc, edit_headers, editor</td>
+</tr>
+<tr>
+<td>i</td>
+<td>Reading Message</td> 
+<td>Returns from reading a message to the Main Menu</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Read">Reading Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>j</td>
+<td>Main Menu</td>
+<td>Changes the selected message to the next message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>color</td>
+</tr>
+<tr>
+<td>k</td>
+<td>Main Menu</td>
+<td>Changes the selected message to the previous message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>color</td>
+</tr>
+<tr>
+<td>m</td>
+<td>Main Menu, Reading Message</td>
+<td>Creates a new message to send</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Send">Sending Messages</a></td>
+<td>abort_nosubject, abort_unmodified, askbcc, askcc, edit_headers,
+editor, recall</td>
+</tr>
+<tr>
+<td>mutt</td>
+<td>Command line</td>
+<td>Starts mutt</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Start">Getting Into and Out of the Mutt
+Menu</a></td>
+<td>beep-new, color, mark_old, move, sort</td>
+</tr>
+<tr>
+<td>p</td>
+<td>Main Menu, Reading Message</td>
+<td>Prints the currently selected message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Print">Printing Messages</a></td>
+<td>print, print_command</td>
+</tr>
+<tr>
+<td>q</td>
+<td>Main Menu</td>
+<td>Quits mutt</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Start">Getting Into and Out of the Mutt
+Menu</a></td>
+<td>delete, mark_old, mbox, move</td>
+</tr>
+<tr>
+<td>q</td>
+<td>Sending Message</td>
+<td>Aborts or postpones the message you have created</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Send">Sending Messages</a> or
+<a href="http://www.ucolick.org/~lharden/learnmutt.html#Postpone">Postponing Messages</a></td>
+<td>postpone, postponed</td>
+</tr>
+<tr>
+<td>r</td>
+<td>Main Menu, Reading Message</td>
+<td>Creates a reply to the current message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Reply">Replying to Messages</a></td>
+<td>abort_nosubject, abort_unmodified, askbcc, askcc, edit_headers,
+editor, include, metoo</td>
+</tr>
+<tr>
+<td>s</td>
+<td>Main Menu, Reading Message</td>
+<td>Saves the current message to a file</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Save">Saving Messages</a></td>
+<td>folder</td>
+</tr>
+<tr>
+<td>s</td>
+<td>Sending Message</td>
+<td>Lets you change the subject for the message you have created</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Send">Sending Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>t</td>
+<td>Sending Message</td>
+<td>Lets you edit the list of recipients for the message you have created</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Send">Sending Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>u</td>
+<td>Main Menu, Reading Message (messages marked for deletion only)</td>
+<td>Removes the deletion mark from the current message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Delete">Deleting Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>x</td>
+<td>Help Menu</td>
+<td>Returns from the help menu to the Main Menu</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>y</td>
+<td>Sending Message</td>
+<td>Sends the message you have created</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Send">Sending Messages</a></td>
+<td>abort_unmodified, copy, record</td>
+</tr>
+<tr>
+<td>?</td>
+<td>Main Menu</td>
+<td>Goes from the Main Menu to the Help Menu</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>color</td>
+</tr>
+<tr>
+<td>-</td>
+<td>Reading Message</td>
+<td>Moves to the previous page in the message you are reading</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Read">Reading Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>/</td>
+<td>Main Menu</td>
+<td>Prompts for a pattern to search for in the headers of your messages</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>=</td>
+<td>Main Menu</td>
+<td>Selects the first message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>color, sort</td>
+</tr>
+<tr>
+<td>$</td>
+<td>Main Menu</td>
+<td>Deletes all messages selected for deletion, and checks for new
+messages</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Delete">Deleting Messages</a></td>
+<td>beep_new, delete, mark_old, mbox, move</td>
+</tr>
+<tr>
+<td>*</td>
+<td>Main Menu</td>
+<td>Selects the last message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>color, sort</td>
+</tr>
+<tr>
+<td>&lt number &gt</td>
+<td>Main Menu</td>
+<td>Selects message <nobr>&lt number &gt</nobr> </td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>color</td>
+</tr>
+<tr>
+<td>&lt Enter &gt</td>
+<td>Main Menu</td>
+<td>Brings the currently selected message up on the screen</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Read">Reading Messages</a></td>
+<td>color</td>
+</tr>
+<tr>
+<td>&lt Space &gt</td>
+<td>Reading Message</td>
+<td>Moves to the next page in the message you are reading, or to the
+first page of the next message not marked for deletion</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Read">Reading Messages</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>&lt Tab &gt</td>
+<td>Main Menu</td>
+<td>Selects the next new message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>color</td>
+</tr>
+<tr>
+<td>&lt Esc &gt /</td>
+<td>Main Menu</td>
+<td>Prompts for a pattern to search for in the bodies of your messages</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>none</td>
+</tr>
+<tr>
+<td>up/down arrow</td>
+<td>Main Menu</td>
+<td>Changes the selected message to the previous/next message</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a></td>
+<td>color</td>
+</tr>
+<tr>
+<td>PgUp / PgDn</td>
+<td>Main Menu, Reading Message</td>
+<td>Moves up/down one page in the Main Menu or the message you are
+reading</td>
+<td><a href="http://www.ucolick.org/~lharden/learnmutt.html#Menu">Getting Around in the Menu</a> or
+<a href="http://www.ucolick.org/~lharden/learnmutt.html#Read">Reading Messages</a></td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3>Explanation of Chart Columns</h3>
+<ol>
+<li>Mutt Command is a command you type in, either at your shell prompt or
+while mutt is running.
+<li>Context is the circumstances under which you would use this command.
+The contexts are:
+<ul>
+<li>Command line.  This is your shell prompt, with mutt not running.
+<li>Main Menu.  This is the main Mutt menu, in which you will see a list
+of your messages.
+<li>Help Menu.  This is Mutt's online help menu.
+<li>Reading Message.  This is when you are reading a message.
+<li>Sending Message.  This is when you have finished editing a message,
+and are preparing to send it.
+</ul>
+<li>Effect gives a brief explanation of what this command will do.  See
+the <a href="http://www.ucolick.org/~lharden/learnmutt.html">tutorial</a> for more details on commands.
+<li>Tutorial Section is the section in the tutorial "Learning Mutt" with
+an explanation of this command.
+<li>Relevant .muttrc settings lists the .muttrc settings that will affect
+the behaviour of this command.
+</ol>
+</div>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-166768780-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-166768780-1');
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
